@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, User, NationalParks, Trail, FavoritePark, FavoriteTrail, connect_to_db
+from model import db, User, NationalParks, Trail, connect_to_db
 
 if __name__ == '__main__':
     from server import app
@@ -30,7 +30,7 @@ def create_national_parks(np_name, overview, things_to_do):
     return np
 
 
-def create_trails(trail_name, trail_description, trail_type, trail_length, trail_difficulty):
+def create_np_trails(trail_name, trail_description, trail_type, trail_length, trail_difficulty):
     """Create a NP trail."""
 
     trail = Trail(trail_name=trail_name,
@@ -58,8 +58,3 @@ def get_trails():
     """Return all trails"""
 
     return Trail.query.all()
-
-
-def get_user_favorite_parks():
-
-    return

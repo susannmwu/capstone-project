@@ -49,7 +49,7 @@ class Trail(db.Model):
     trail_name = db.Column(db.String)
     trail_description = db.Column(db.String)
     trail_type = db.Column(db.String)
-    trail_length = db.Column(db.String)
+    trail_length = db.Column(db.Integer)
     trail_difficulty = db.Column(db.String)
 
     favorite_trails = db.relationship("FavoriteTrail", back_populates="trail")
