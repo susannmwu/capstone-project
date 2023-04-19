@@ -14,6 +14,14 @@ def homepage():
     return render_template("homepage.html")
 
 
+@app.route("/national-parks")
+def all_national_parks():
+    """View all National Parks"""
+    national_park = NationalParks.all_national_parks()
+
+    return render_template("all_national_parks.html", national_park=national_park)
+
+
 if __name__ == "__main__":
     connect_to_db(app)
     app.run(host="0.0.0.0", debug=True)

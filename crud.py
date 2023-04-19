@@ -20,12 +20,12 @@ def get_user_by_id(user_id):
     return User.query.get(user_id)
 
 
-def create_national_parks(np_name, overview, things_to_do):
+def create_national_parks(park_code, np_name, description):
     """Create a National Park."""
 
-    np = NationalParks(np_name=np_name,
-                       overview=overview,
-                       things_to_do=things_to_do)
+    np = NationalParks(park_code=park_code,
+                       np_name=np_name,
+                       description=description)
 
     return np
 

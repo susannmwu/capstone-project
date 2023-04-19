@@ -27,9 +27,10 @@ class NationalParks(db.Model):
     __tablename__ = "national_parks"
 
     np_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    park_code = db.Column(db.String, nullable=False)
     np_name = db.Column(db.String, unique=True)
-    overview = db.Column(db.String)
-    things_to_do = db.Column(db.String)
+    description = db.Column(db.String)
+    # things_to_do = db.Column(db.String)
 
     favorite_parks = db.relationship(
         "FavoritePark", back_populates="national_park")
