@@ -20,15 +20,17 @@ os.system("createdb trails")
 model.connect_to_db(server.app)
 model.db.create_all()
 
-########################################################################
 
 """Search for national parks info"""
 # https://developer.nps.gov/api/v1/parks?api_key=
-# API_KEY = os.environ["NPS_KEY"]
 
-# payload = {"api_key": API_KEY}
-url = "https://developer.nps.gov/api/v1/parks?limit=468&start=0&api_key=O8FJvg81PaGUCA8plmVfUnC9zuvg7lEcGbdjmIQI"
-res = requests.get(url)
+API_KEY = os.environ["NPS_KEY"]
+
+payload = {"api_key": API_KEY}
+payload["limit"] = "500"
+
+url = "https://developer.nps.gov/api/v1/parks"
+res = requests.get(url, params=payload)
 
 # dictionary of query
 res_json = res.json()
