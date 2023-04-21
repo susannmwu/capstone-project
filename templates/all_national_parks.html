@@ -1,13 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>National Parks Page</title>
-</head>
-<body>
-    This is the National Parks Page
-    <a href="/national-parks/trails">Let's search for some trails</a>
-</body>
-</html>
+<style>
+  img {
+  height: 200px;
+  width: 200px;
+}
+</style>
+{% extends 'base.html' %}
+
+{% block title %}View all National Parks{% endblock %}
+
+{% block body %}
+
+
+<ul>
+    
+    {% for national_park in national_parks %}
+    <li>
+        <a href="/national-parks/{{ national_park.np_id }}">
+        {{ national_park.np_name }}
+      </a>
+    </li>
+
+      <img src="{{ national_park.image_url }}" alt="">
+    </div>
+    {% endfor %}
+  </ul>
+  {% endblock %}

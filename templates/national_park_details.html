@@ -1,0 +1,23 @@
+<style>
+  img {
+  height: 700px;
+  width: 700px;
+}
+</style>
+
+{% extends 'base.html' %}
+
+{% block title %}{{ national_park.np_name }} - Details{% endblock %}
+
+{% block body %}
+
+<h1>{{ national_park.np_name }}</h1>
+
+<p>
+  {{ national_park.description }}
+</p>
+<p>
+  <a href="/national-parks/trails?parkCode={{ national_park.park_code }}">Let's find some hiking trails</a>
+</p>
+<img src="{{ national_park.image_url }}" alt="">
+{% endblock %}

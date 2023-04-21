@@ -38,39 +38,37 @@ res_json = res.json()
 # list of query
 parks_list = res_json["data"]
 
-# for result in parks_list:
-#     fullname = result.get("fullName")
-#     parkcode = result. get("parkCode")
-#     description = result.get("description")
-#     print(f"{fullname}")
-
 park_designations = ["National and State Parks",
                      "National Park & Preserve", "National Park", "National Parks"]
+
+# 61 parks, could not get American Samoa
+
 national_parks = []
+
 
 for park in parks_list:
     if park["designation"] in park_designations:
         national_parks.append(park)
 
-# 61 parks, could not get American Samoa
-# print(len(national_parks))
-
+print(national_parks[0])
 for park in national_parks:
     parkcode = park.get("parkCode")
     fullname = park.get("fullName")
     description = park.get("description")
-    # print(f"{parkcode} {fullname}")
-
-    np = crud.create_national_parks(parkcode, fullname, description)
+    image_url = park["images"][0]["url"]
+    # print(f"{fullname}")
+    # print(f"{image_url}")
+    np = crud.create_national_parks(parkcode, fullname, description, image_url)
     model.db.session.add(np)
 
     model.db.session.commit()
 
 
 ########################################################################
-# odds = crud.create_user("Odds", "Cat", "Cat@cat.com", "MoarFoodPls")
-# model.db.session.add(odds)
+# susan = crud.create_user("Susan", "Wu", "susanlovescats@cats.com", "")
+# model.db.session.add(susan)
 # model.db.session.commit()
+
 
 # # Create a NP
 # yosemite = crud.create_national_parks("Yosemite National Park",

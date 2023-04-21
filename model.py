@@ -30,7 +30,7 @@ class NationalParks(db.Model):
     park_code = db.Column(db.String, nullable=False)
     np_name = db.Column(db.String, unique=True)
     description = db.Column(db.String)
-    # things_to_do = db.Column(db.String)
+    image_url = db.Column(db.String)
 
     favorite_parks = db.relationship(
         "FavoritePark", back_populates="national_park")

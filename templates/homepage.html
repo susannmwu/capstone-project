@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+    img {
+    height: 500px;
+    width: 500px;
+  }
+  </style>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Happy Trails</title>
 </head>
 <body>
-    Welcome to Happy Trails!
+    <h1>Welcome to Happy Trails! &#129406;</h1>
     <h2>Navigation</h2>
 
     <ul>
     <li><a href="/national-parks">View all National Parks</a></li>
-    <li><a href="/users">View all users</a></li>
+    <li><a href="/users">View all hikers</a></li>
     </ul>
 
  
-    <h2>Create an Account</h2>
+    <h3>Create an Account</h3>
     <form action="/users" method="POST">
+      <p>
+        First name <input type="text" name="first_name">
+      </p>
+  
+      <p>
+        Last name <input type="text" name="last_name">
+      </p>
+  
       <p>
         Email <input type="text" name="email">
       </p>
@@ -32,7 +47,7 @@
     </form>
 
 
-    <h2>Log In</h2>
+    <h3>Log In</h3>
     <form action="/login" method="POST">
       <p>
         Email <input type="text" name="email">

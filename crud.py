@@ -14,20 +14,46 @@ def create_user(first_name, last_name, email, password):
     return user
 
 
+def get_users():
+    """Return all users."""
+
+    return User.query.all()
+
+
 def get_user_by_id(user_id):
     """Return a user by primary key"""
 
     return User.query.get(user_id)
 
 
-def create_national_parks(park_code, np_name, description):
+def get_user_by_email(email):
+    """Return a user by email."""
+
+    return User.query.filter(User.email == email).first()
+
+
+def create_national_parks(park_code, np_name, description, image_url):
     """Create a National Park."""
 
     np = NationalParks(park_code=park_code,
                        np_name=np_name,
-                       description=description)
+                       description=description,
+                       image_url=image_url)
 
     return np
+
+
+def get_national_parks():
+    """Return all national parks"""
+
+    return NationalParks.query.all()
+
+
+def get_np_by_id(np_id):
+    """Return national parks by np_id"""
+    NationalParks.query.get(np_id)
+
+    return NationalParks.query.get(np_id)
 
 
 def create_np_trails(trail_name, trail_description, trail_type, trail_length, trail_difficulty):
@@ -40,18 +66,6 @@ def create_np_trails(trail_name, trail_description, trail_type, trail_length, tr
                   trail_difficulty=trail_difficulty)
 
     return trail
-
-
-def get_national_parks():
-    """Return all national parks"""
-
-    return NationalParks.query.all()
-
-
-def get_national_park_by_id(np_id):
-    """Return national parks by id."""
-
-    return NationalParks.query.get(np_id)
 
 
 def get_trails():
