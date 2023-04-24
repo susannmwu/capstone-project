@@ -1,1 +1,36 @@
-<h1>{{user.first_name}}'s Page</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends 'base.html' %}
+    {% block title %} {{ user.first_name }}'s Profile {% endblock %}
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    {% block body %}
+
+    <h1>Welcome back, {{ user.first_name }}</h1>
+    <h3>Favorite parks list</h3>
+    <p id="list">
+    {% for park in user.favorite_parks %}
+        <p>
+            {{ park.np_name }}
+        </p>
+
+        <p>
+            <label for="notes">Notes</label>
+            <input type="text" id="park-details">
+            <input type="submit" name="" id="">
+        </p>
+        
+       {% endfor %} 
+    </p>
+
+    <h3>Favorite trails list</h3>
+    {% endblock %}
+</body>
+
+
+
+<script src="/static/js/addFavorites.js"></script>
+</html>
+

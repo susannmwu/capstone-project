@@ -1,13 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
 
-  <h1>All Hikers</h1>
+<body>
+  <h2>View all hikers</h2>
 
-  <ul>
+<div>
     {% for user in users %}
-      <li>
+    <ul id="all-users">
         <a href="/users/{{ user.user_id }}">
             {{ user.first_name }} 
             {{ user.last_name }}
         </a>
-      </li>
+    </ul>
     {% endfor %}
-  </ul>
+</div>
+  
+</body>
+</html>

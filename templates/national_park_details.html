@@ -1,15 +1,14 @@
-<style>
-  img {
-  height: 700px;
-  width: 700px;
-}
-</style>
 
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/static/styles.css">
 
-{% block title %}{{ national_park.np_name }} - Details{% endblock %}
-
-{% block body %}
+</head>
+<body>
+  {% extends 'base.html' %}
+  {% block title %}{{ national_park.np_name }} - Details{% endblock %}
+  {% block body %}
 
 <h1>{{ national_park.np_name }}</h1>
 
@@ -17,7 +16,28 @@
   {{ national_park.description }}
 </p>
 <p>
-  <a href="/national-parks/trails?parkCode={{ national_park.park_code }}">Let's find some hiking trails</a>
+  <button type="button" onclick="window.location.href='/national-parks/trails?parkCode={{ national_park.park_code }}';">Find hiking trails</button>
 </p>
-<img src="{{ national_park.image_url }}" alt="">
-{% endblock %}
+<img id="national-parks-images"
+  src="{{ national_park.image_url }}" alt="">
+
+<!-- <p>
+  <a href="/national-parks/trails?parkCode={{ national_park.park_code }}">Find hiking trails</a>
+</p> -->
+
+
+<section id="fav-parks">
+    {% if session.get('user_email') %}
+
+  <form action="/national-parks/{{ national_park.np_id }}/favorite-parks" method="POST">
+    
+   <input type="submit" value="Add park to favorites">
+  </form>
+  {% endif %}
+</section>
+
+  {% endblock %}
+
+<script src="/static/js/addFavorites.js"></script>
+</body>
+</html>

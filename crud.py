@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, User, NationalParks, Trail, connect_to_db
+from model import db, User, NationalParks, Trail, FavoritePark, connect_to_db
 
 if __name__ == '__main__':
     from server import app
@@ -56,19 +56,41 @@ def get_np_by_id(np_id):
     return NationalParks.query.get(np_id)
 
 
-def create_np_trails(trail_name, trail_description, trail_type, trail_length, trail_difficulty):
-    """Create a NP trail."""
+def create_fav_park(user, national_park):
+    """Create and return a park for user's favorite parks"""
 
-    trail = Trail(trail_name=trail_name,
-                  trail_description=trail_description,
-                  trail_type=trail_type,
-                  trail_length=trail_length,
-                  trail_difficulty=trail_difficulty)
-
-    return trail
+    fav_park = FavoritePark(user_id=user.user_id, np_id=national_park.np_id)
+    db.session.add(fav_park)
+    db.session.commit()
+    return fav_park
 
 
-def get_trails():
-    """Return all trails"""
+def get_user_fav_park(user_id):
+    """Returns a list of user's favorite parks"""
 
-    return Trail.query.all()
+    user_fav_parks = FavoritePark.query.filter(User.user_id == user_id).first()
+
+    user_fav_parks_lst = []
+
+    for park in user_fav_parks:
+        user_fav_parks_lst.append(park)
+
+    return user_fav_parks_lst
+
+################################################################################
+# def create_np_trails(trail_name, trail_description, trail_type, trail_length, trail_difficulty):
+#     """Create a NP trail."""
+
+#     trail = Trail(trail_name=trail_name,
+#                   trail_description=trail_description,
+#                   trail_type=trail_type,
+#                   trail_length=trail_length,
+#                   trail_difficulty=trail_difficulty)
+
+#     return trail
+
+
+# def get_trails():
+#     """Return all trails"""
+
+#     return Trail.query.all()

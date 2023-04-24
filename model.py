@@ -15,11 +15,14 @@ class User(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
 
-    favorite_parks = db.relationship("FavoritePark", back_populates="user")
+    favorite_parks = db.relationship(
+        "NationalParks", secondary="favorite_parks", back_populates="user_fav_parks")
     favorite_trails = db.relationship("FavoriteTrail", back_populates="user")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email}>"
+
+# change NationalParks class name to NationalPark
 
 
 class NationalParks(db.Model):
@@ -32,8 +35,8 @@ class NationalParks(db.Model):
     description = db.Column(db.String)
     image_url = db.Column(db.String)
 
-    favorite_parks = db.relationship(
-        "FavoritePark", back_populates="national_park")
+    user_fav_parks = db.relationship(
+        "User", secondary="favorite_parks", back_populates="favorite_parks")
     national_park_trails = db.relationship(
         "Trail", back_populates="national_park")
 
@@ -69,14 +72,14 @@ class FavoritePark(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     np_id = db.Column(db.Integer, db.ForeignKey(
         "national_parks.np_id"))
-    np_reviews = db.Column(db.String)
+    # np_reviews = db.Column(db.String)
 
-    user = db.relationship("User", back_populates="favorite_parks")
-    national_park = db.relationship(
-        "NationalParks", back_populates="favorite_parks")
+    # user = db.relationship("User", back_populates="favorite_parks")
+    # national_park = db.relationship(
+    #     "NationalParks", back_populates="favorite_parks")
 
     def __repr__(self):
-        return f"<Favorite_Park np_id={self.np_id} np_name={self.np_name}>"
+        return f"<Favorite_Park np_id={self.np_id} np_name={self.national_park}>"
 
 
 class FavoriteTrail(db.Model):
@@ -86,7 +89,7 @@ class FavoriteTrail(db.Model):
         db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     trail_id = db.Column(db.Integer, db.ForeignKey("trails.trail_id"))
-    trail_reviews = db.Column(db.String)
+    # trail_reviews = db.Column(db.String)
 
     user = db.relationship("User", back_populates="favorite_trails")
     trail = db.relationship("Trail", back_populates="favorite_trails")

@@ -1,27 +1,31 @@
-<style>
-  img {
-  height: 200px;
-  width: 200px;
-}
-</style>
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      {% extends 'base.html' %}
 
-{% block title %}View all National Parks{% endblock %}
+      {% block title %}View all National Parks{% endblock %}
+  
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
 
-{% block body %}
+  {% block body %}
 
-
-<ul>
-    
-    {% for national_park in national_parks %}
-    <li>
+  <h1>All National Parks</h1>
+  <div id="three-col">
+  <ul>
+        {% for national_park in national_parks %}
+        <p>
         <a href="/national-parks/{{ national_park.np_id }}">
-        {{ national_park.np_name }}
-      </a>
-    </li>
+        {{ national_park.np_name }} </a>
+        </p>
+            <img id="national-parks-images" 
+            src="{{ national_park.image_url }}">
 
-      <img src="{{ national_park.image_url }}" alt="">
-    </div>
     {% endfor %}
   </ul>
+  </div>
+
   {% endblock %}
+</body>
+</html>

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, session, redirect
-from model import connect_to_db, db, User, NationalParks, Trail
+from model import connect_to_db, db
 
 from jinja2 import StrictUndefined
 import os
@@ -17,6 +17,24 @@ API_KEY = os.environ["NPS_KEY"]
 def homepage():
     """View homepage."""
     return render_template("homepage.html")
+
+
+@app.route("/national-parks")
+def all_national_parks():
+    """View all National Parks"""
+    national_parks = crud.get_national_parks()
+
+    return render_template("all_national_parks.html",
+                           national_parks=national_parks)
+
+
+@app.route("/national-parks/<np_id>")
+def show_national_park(np_id):
+    """Show details about a particular national park."""
+
+    national_park = crud.get_np_by_id(np_id)
+
+    return render_template("national_park_details.html", national_park=national_park)
 
 
 @app.route("/users")
@@ -75,27 +93,31 @@ def process_login():
     return redirect("/")
 
 
-@app.route("/national-parks")
-def all_national_parks():
-    """View all National Parks"""
-    national_parks = crud.get_national_parks()
+@app.route("/national-parks/<np_id>/favorite-parks", methods=["POST"])
+def add_favorite_park(np_id):
+    """Add park to user's favorites"""
 
-    return render_template("all_national_parks.html",
-                           national_parks=national_parks)
+    logged_in_email = session.get("user_email")
 
+    if logged_in_email is None:
+        flash("You must log in to add a park to your favorite parks list")
+    else:
+        user = crud.get_user_by_email(logged_in_email)
+        national_park = crud.get_np_by_id(np_id)
 
-@app.route("/national-parks/<np_id>")
-def show_national_park(np_id):
-    """Show details about a particular national park."""
+        # create a favorite park object
+        fav_park = crud.create_fav_park(user, national_park)
 
-    national_park = crud.get_np_by_id(np_id)
+        flash(
+            f"You've added this {national_park.np_name} to your favorite parks list")
 
-    return render_template("national_park_details.html", national_park=national_park)
+    return render_template("user_details.html", user=user)
 
 
 @app.route("/national-parks/trails")
 def find_trails():
     """Search for National Parks trails using NPS thingstodo endroute"""
+
     parkCode = request.args.get("parkCode", "")
     q = request.args.get("q", "")
     sort = request.args.get("sort", "")
@@ -124,14 +146,17 @@ def find_trails():
         for activity in activities:
             if activity["name"] == "Hiking":
                 hiking_trails.append(item["title"])
-                print(hiking_trails)
+                hiking_trails.append(item["longDescription"])
+    # hiking_trails.append(item["arePetsPermitted"])
+    # print(hiking_trails)
 
     for item in response_json_list:
         amenities = item["amenities"]
         for amenity in amenities:
             if amenity == "Trailhead":
                 hiking_trails.append(item["title"])
-                print(hiking_trails)
+                hiking_trails.append(item["bodyText"])
+                # print(hiking_trails)
 
     #     # res_json["data"] is a list and I need to figure out how to parse the data out
     #     # in each item of the list, there's a key called activities
@@ -139,6 +164,19 @@ def find_trails():
     return render_template("trails-search-results.html",
                            data=res_json,
                            hiking_trails=hiking_trails)
+
+
+# @app.route("/national-parks/<np_id>")
+# def create_favorite_park(np_id):
+#     logged_in_email = session.get("user_email")
+#     text = request.form.get("text")
+
+#     if logged_in_email is None:
+#         flash("you must log in")
+#     else:
+#         user = User.get_by_email(logged_in_email)
+
+#     return redirect("/national-parks/{np_id}")
 
 
 if __name__ == "__main__":

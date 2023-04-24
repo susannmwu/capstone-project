@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trails Search</title>
+  {% extends 'base.html' %}
+  {% block title %}Trails Search{% endblock %}
+
+  <link rel="stylesheet" href="/static/styles.css">
+
 </head>
 <body>
 
-        <div id="trail-search-results">
-          <h2>Trail Search Results</h2>
+  {% block body %}
 
-          <ul class="trails-list">
-            {% for trail in hiking_trails %}
-              <li>
-                <a href= "" target="_blank">
-                  {{ trail }}
-    
-                </a>
-              </li>
-            {% endfor %}
-            
-          </ul>
-        </div>
-      </div>
-    </div>
+  <div id="trail-search-results">
+    <h2> Trail Search Results</h2>
+
+      <p id="list-of-trails"> 
+        {% for trail in hiking_trails %}
+          <p>
+            {{ trail }}
+          </p>
+          <p>
+            <button id="save-trail">Save trail</button>
+          </p>
+        {% endfor %}
+
+        </p>
+
   </div>
+
+  {% endblock %}
+
 </body>
+</html>

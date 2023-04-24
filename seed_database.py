@@ -6,7 +6,6 @@ import requests
 
 
 import os
-import json
 import crud
 import model
 import server
@@ -45,12 +44,11 @@ park_designations = ["National and State Parks",
 
 national_parks = []
 
-
 for park in parks_list:
     if park["designation"] in park_designations:
         national_parks.append(park)
 
-print(national_parks[0])
+# print(national_parks[0])
 for park in national_parks:
     parkcode = park.get("parkCode")
     fullname = park.get("fullName")
@@ -61,14 +59,22 @@ for park in national_parks:
     np = crud.create_national_parks(parkcode, fullname, description, image_url)
     model.db.session.add(np)
 
-    model.db.session.commit()
+model.db.session.commit()
 
 
 ########################################################################
-# susan = crud.create_user("Susan", "Wu", "susanlovescats@cats.com", "")
-# model.db.session.add(susan)
-# model.db.session.commit()
+susan = crud.create_user("Susan", "Wu", "susanlovescats@cats.com", "")
+model.db.session.add(susan)
+model.db.session.commit()
 
+yosemite = model.NationalParks.query.filter(
+    model.NationalParks.np_name == "Yosemite National Park").first()
+
+fav_park = model.FavoritePark(
+    user_id=susan.user_id, np_id=yosemite.np_id, np_reviews="My favorite park!")
+
+model.db.session.add(fav_park)
+model.db.session.commit()
 
 # # Create a NP
 # yosemite = crud.create_national_parks("Yosemite National Park",

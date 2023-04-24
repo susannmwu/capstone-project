@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
   <style>
-    img {
+  img {
     height: 500px;
     width: 500px;
   }
+  body {
+    background-image: url("/static/hurricane-ridge.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+}
   </style>
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Trails</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
+
 <body>
-    <h1>Welcome to Happy Trails! &#129406;</h1>
-    <h2>Navigation</h2>
+  {% block body %}
+    <h1>Welcome to Happy Trails! &#129406; </h1>
 
-    <ul>
-    <li><a href="/national-parks">View all National Parks</a></li>
-    <li><a href="/users">View all hikers</a></li>
-    </ul>
-
- 
-    <h3>Create an Account</h3>
+    <h3>Register</h3>
     <form action="/users" method="POST">
       <p>
         First name <input type="text" name="first_name">
@@ -52,15 +55,14 @@
       <p>
         Email <input type="text" name="email">
       </p>
-  
       <p>
         Password <input type="password" name="password">
       </p>
-  
       <p>
         <input type="submit">
       </p>
     </form>
 
 </body>
+{% endblock %}
 </html>

@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/static/styles.css">
+
     <title>
       {% block title %}{% endblock %}
     </title>
@@ -10,8 +12,29 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    {% block body %}{% endblock %}
 
-    {% block after_body %}{% endblock %}
+
+    <ul id="nav-list">
+
+    <div id="navigation-bar">
+    <li id="nav"><a href="/">Home</a></li>
+    <li id="nav"><a href="/national-parks">National Parks</a></li>
+    <li id="nav"><a href="/users">All Users</a></li>
+    <li id="nav"><a href="">Profile</a></li>
+    <li id="nav"><a href="">About</a></li>
+    </div>
+
+    </ul>
+
+    {% for msg in get_flashed_messages() %}
+    <p class="flash-msg">
+      {{ msg }}
+    </p>
+    
+  {% endfor %}
+  {% block body %}{% endblock %}
+
+  {% block after_body %}{% endblock %}
   </body>
 </html>
+
