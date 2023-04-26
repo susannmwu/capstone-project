@@ -5,6 +5,7 @@ from jinja2 import StrictUndefined
 import os
 import requests
 import crud
+import re
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -93,6 +94,15 @@ def process_login():
     return redirect("/")
 
 
+@app.route("/logout")
+def logout():
+    """Log users out"""
+    del session["user_email"]
+    session.clear()
+    flash("You've logged out successfully.")
+    return redirect("/")
+
+
 @app.route("/national-parks/<np_id>/favorite-parks", methods=["POST"])
 def add_favorite_park(np_id):
     """Add park to user's favorites"""
@@ -114,13 +124,32 @@ def add_favorite_park(np_id):
     return render_template("user_details.html", user=user)
 
 
+@app.route("/national-parks/<np_id>/favorite-trails", methods=["POST"])
+def add_favorite_trail(np_id):
+    """Add trail to user's favorites"""
+
+    logged_in_email = session.get("user_email")
+
+    if logged_in_email is None:
+        flash("You must log in to add a park to your favorite trails list")
+    else:
+        user = crud.get_user_by_email(logged_in_email)
+        national_park = crud.get_np_by_id(np_id)
+
+        # create a favorite park object
+        fav_park = crud.create_fav_park(user, national_park)
+
+        flash(
+            f"You've added this {national_park.np_name} to your favorite parks list")
+
+    return render_template("user_details.html", user=user)
+
+
 @app.route("/national-parks/trails")
 def find_trails():
     """Search for National Parks trails using NPS thingstodo endroute"""
 
     parkCode = request.args.get("parkCode", "")
-    q = request.args.get("q", "")
-    sort = request.args.get("sort", "")
 
     things_to_do_url = "https://developer.nps.gov/api/v1/thingstodo"
     places_url = "https://developer.nps.gov/api/v1/places"
@@ -132,7 +161,6 @@ def find_trails():
     res = requests.get(things_to_do_url, params=payload)
     response = requests.get(places_url, params=payload)
 
-    # keys are dict_keys(['total', 'limit', 'start', 'data'])
     res_json = res.json()
     response_json = response.json()
 
@@ -143,23 +171,26 @@ def find_trails():
 
     for item in res_json_list:
         activities = item["activities"]
+        images = item["images"]
         for activity in activities:
             if activity["name"] == "Hiking":
-                hiking_trails.append(item["title"])
-                hiking_trails.append(item["longDescription"])
-    # hiking_trails.append(item["arePetsPermitted"])
-    # print(hiking_trails)
+                item["longDescription"] = re.sub(
+                    r"<.*?>", "", item["longDescription"])
+                for image in images:
+                    url = image["url"]
+                hiking_trails.append(
+                    {"name": item["title"], "description": item["longDescription"], "images": url})
 
     for item in response_json_list:
         amenities = item["amenities"]
+        images = item["images"]
         for amenity in amenities:
             if amenity == "Trailhead":
-                hiking_trails.append(item["title"])
-                hiking_trails.append(item["bodyText"])
-                # print(hiking_trails)
-
-    #     # res_json["data"] is a list and I need to figure out how to parse the data out
-    #     # in each item of the list, there's a key called activities
+                item["bodyText"] = re.sub(r"<.*?>", "", item["bodyText"])
+                for image in images:
+                    url = image["url"]
+                hiking_trails.append(
+                    {"name": item["title"], "description": item["bodyText"], "images": url})
 
     return render_template("trails-search-results.html",
                            data=res_json,

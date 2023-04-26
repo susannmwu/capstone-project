@@ -11,21 +11,30 @@
 
   {% block body %}
 
+<!-- Flexbox to achieve three columns or use react trading cards with the grid -->
+
+
   <h1>All National Parks</h1>
-  <div id="three-col">
-  <ul>
-        {% for national_park in national_parks %}
-        <p>
+
+  <div class="parent">
+    {% for national_park in national_parks %}
+
+    <div class="child">
+      <p>
         <a href="/national-parks/{{ national_park.np_id }}">
-        {{ national_park.np_name }} </a>
-        </p>
-            <img id="national-parks-images" 
-            src="{{ national_park.image_url }}">
+        {{ national_park.np_name }} 
+      </p>
 
+      <p>
+        <img id="national-parks-images" 
+        src="{{ national_park.image_url }}">
+      </p>
+
+    </div>
     {% endfor %}
-  </ul>
-  </div>
 
+  </div>
+  
   {% endblock %}
 </body>
 </html>

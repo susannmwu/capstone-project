@@ -17,14 +17,19 @@
       <p id="list-of-trails"> 
         {% for trail in hiking_trails %}
           <p>
-            {{ trail }}
-          </p>
+            {{ trail["name"] }}
+           <p>
+            <p>
+              {{ trail["description"] }}
+            </p>
+            <p>
+            <img id="trail-images"src="{{ trail["images"] }}" alt="">
+            </p>
           <p>
             <button id="save-trail">Save trail</button>
           </p>
         {% endfor %}
 
-        </p>
 
   </div>
 

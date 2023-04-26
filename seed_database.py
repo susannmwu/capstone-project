@@ -63,7 +63,7 @@ model.db.session.commit()
 
 
 ########################################################################
-susan = crud.create_user("Susan", "Wu", "susanlovescats@cats.com", "")
+susan = crud.create_user("Susan", "Wu", "susanwu@gmail.com", "cats")
 model.db.session.add(susan)
 model.db.session.commit()
 
