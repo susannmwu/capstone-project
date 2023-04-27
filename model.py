@@ -17,7 +17,8 @@ class User(db.Model):
 
     favorite_parks = db.relationship(
         "NationalParks", secondary="favorite_parks", back_populates="user_fav_parks")
-    favorite_trails = db.relationship("FavoriteTrail", back_populates="user")
+    favorite_trails = db.relationship(
+        "FavoriteTrail", back_populates="user")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email}>"
@@ -38,30 +39,10 @@ class NationalParks(db.Model):
     user_fav_parks = db.relationship(
         "User", secondary="favorite_parks", back_populates="favorite_parks")
     national_park_trails = db.relationship(
-        "Trail", back_populates="national_park")
+        "FavoriteTrail", back_populates="national_park")
 
     def __repr__(self):
         return f"<National_Park np_id={self.np_id} np_name={self.np_name}>"
-
-
-class Trail(db.Model):
-    """A National Park Trail."""
-    __tablename__ = "trails"
-
-    trail_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    np_id = db.Column(db.Integer, db.ForeignKey("national_parks.np_id"))
-    trail_name = db.Column(db.String)
-    trail_description = db.Column(db.String)
-    trail_type = db.Column(db.String)
-    trail_length = db.Column(db.Integer)
-    trail_difficulty = db.Column(db.String)
-
-    favorite_trails = db.relationship("FavoriteTrail", back_populates="trail")
-    national_park = db.relationship(
-        "NationalParks", back_populates="national_park_trails")
-
-    def __repr__(self):
-        return f"<Trail trail_id={self.trail_id} trail_name={self.trail_name}>"
 
 
 class FavoritePark(db.Model):
@@ -72,11 +53,6 @@ class FavoritePark(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     np_id = db.Column(db.Integer, db.ForeignKey(
         "national_parks.np_id"))
-    # np_reviews = db.Column(db.String)
-
-    # user = db.relationship("User", back_populates="favorite_parks")
-    # national_park = db.relationship(
-    #     "NationalParks", back_populates="favorite_parks")
 
     def __repr__(self):
         return f"<Favorite_Park np_id={self.np_id} np_name={self.national_park}>"
@@ -88,14 +64,16 @@ class FavoriteTrail(db.Model):
     favorite_trail_id = db.Column(
         db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    trail_id = db.Column(db.Integer, db.ForeignKey("trails.trail_id"))
-    # trail_reviews = db.Column(db.String)
+    np_id = db.Column(db.Integer, db.ForeignKey("national_parks.np_id"))
+    trail_name = db.Column(db.String)
+    trail_description = db.Column(db.String)
 
+    national_park = db.relationship(
+        "NationalParks", back_populates="national_park_trails")
     user = db.relationship("User", back_populates="favorite_trails")
-    trail = db.relationship("Trail", back_populates="favorite_trails")
 
     def __repr__(self):
-        return f"<Favorite_Trail trail_id={self.trail_id} trail_name={self.trail_name}>"
+        return f"<Favorite_Trail fav_trail_id={self.favorite_trail_id} trail_name={self.trail_name}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///trails", echo=False):

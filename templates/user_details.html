@@ -18,7 +18,7 @@
 
         <p>
          <form action="">
-                <p><label></label>Record your national park adventures below</p>
+                <p><label></label>Reflect on your national park adventures below</p>
                 <textarea id="" name="" rows="4" cols="50"></textarea>
                 <br>
                 <input type="submit" value="Submit">
@@ -30,9 +30,17 @@
     </p>
 
     <h3>Favorite trails list</h3>
+
+    <p id="fav-trails-list">
+    {% for park in user.favorite_trails %}
+    <p>
+        {{ park.trail_name }} 
+        {{ park.trail_description }}
+    </p>
+    {% endfor %} 
+    
     {% endblock %}
 </body>
-
 
 
 <script src="/static/js/addFavorites.js"></script>

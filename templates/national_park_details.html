@@ -25,15 +25,14 @@
   <a href="/national-parks/trails?parkCode={{ national_park.park_code }}">Find hiking trails</a>
 </p> -->
 
-
 <section id="fav-parks">
-    {% if session.get('user_email') %}
+  {% if session.get('user_email') %}
 
-  <form action="/national-parks/{{ national_park.np_id }}/favorite-parks" method="POST">
-    
-   <input type="submit" value="Add park to favorites">
-  </form>
-  {% endif %}
+<form action="/national-parks/{{ national_park.np_id }}/favorite-parks" method="POST">
+  
+ <input type="submit" value="Add park to favorites">
+</form>
+{% endif %}
 </section>
 
   {% endblock %}

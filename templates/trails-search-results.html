@@ -22,12 +22,24 @@
             <p>
               {{ trail["description"] }}
             </p>
-            <p>
+            
             <img id="trail-images"src="{{ trail["images"] }}" alt="">
-            </p>
-          <p>
-            <button id="save-trail">Save trail</button>
-          </p>
+
+
+
+            <section id="fav-trails">
+              {% if session.get('user_email') %}
+            
+            <form action="/national-parks/trails/ {{ trail['name'] }}" method="POST">
+
+            <input name="description" type="hidden" value="{{ trail['description'] }}">     
+            <input name="parkcode" type="hidden" value="{{ parkCode }}"> 
+             <input type="submit" value="Add trail to favorites">
+
+            </form>
+            {% endif %}
+            </section>
+
         {% endfor %}
 
 
@@ -35,5 +47,6 @@
 
   {% endblock %}
 
+  <script src="/static/js/addFavorites.js"></script>
 </body>
 </html>

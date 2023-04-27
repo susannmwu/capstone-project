@@ -71,10 +71,17 @@ yosemite = model.NationalParks.query.filter(
     model.NationalParks.np_name == "Yosemite National Park").first()
 
 fav_park = model.FavoritePark(
-    user_id=susan.user_id, np_id=yosemite.np_id, np_reviews="My favorite park!")
+    user_id=susan.user_id, np_id=yosemite.np_id)
 
 model.db.session.add(fav_park)
 model.db.session.commit()
+
+# cloudsrest = model.FavoriteTrail.query.filter(model.Trail.trail_name)
+# fav_trail = model.FavoriteTrail(
+#     user_id=susan.user_id, trail_id=cloudsrest.trail_id)
+
+# model.db.session.add(fav_trail)
+# model.db.session.commit()
 
 # # Create a NP
 # yosemite = crud.create_national_parks("Yosemite National Park",
