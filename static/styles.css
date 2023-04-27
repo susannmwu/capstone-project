@@ -63,3 +63,9 @@ border: 2px solid black;
 .twitter-timeline {
   text-align: center;
 }
+
+/* Twitter page */
+
+#nps-tweets {
+  align: center; 
+}
