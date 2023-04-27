@@ -21,6 +21,12 @@ def homepage():
     return render_template("homepage.html")
 
 
+@app.route("/nps-tweets")
+def nps_tweets():
+    """View NPS tweets """
+    return render_template("nps_tweets.html")
+
+
 @app.route("/national-parks")
 def all_national_parks():
     """View all National Parks"""
