@@ -76,6 +76,9 @@ class FavoriteTrail(db.Model):
         return f"<Favorite_Trail fav_trail_id={self.favorite_trail_id} trail_name={self.trail_name}>"
 
 
+##############################################################################
+# Helper functions
+
 def connect_to_db(flask_app, db_uri="postgresql:///trails", echo=False):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo

@@ -9,6 +9,7 @@ if __name__ == '__main__':
 
 def create_user(first_name, last_name, email, password):
     """Create and return a new user."""
+
     user = User(first_name=first_name, last_name=last_name,
                 email=email, password=password)
     return user
@@ -67,6 +68,7 @@ def create_fav_park(user, national_park):
 
     db.session.add(fav_park)
     db.session.commit()
+
     return fav_park
 
 
@@ -91,8 +93,6 @@ def create_fav_trail(user, np_id, trail_name, trail_description):
                               trail_name=trail_name,
                               trail_description=trail_description)
 
-    db.session.add(fav_trail)
-    db.session.commit()
     return fav_trail
 
 
