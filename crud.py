@@ -86,6 +86,16 @@ def get_user_fav_park(user_id):
     return user_fav_parks_lst
 
 
+def remove_fav_park(user_id, np_id):
+    np_id = NationalParks.query.get(np_id)
+    user = User.query.get(user_id)
+    user_fav_park = user.favorite_parks
+
+    for park in user_fav_park:
+        if park.np_id == np_id:
+            pass
+
+
 def create_fav_trail(user, np_id, trail_name, trail_description):
     """Create and return a trail as user's favorite trail"""
 
@@ -97,15 +107,15 @@ def create_fav_trail(user, np_id, trail_name, trail_description):
     return fav_trail
 
 
-def get_fav_trail_name(user_id):
+def get_all_users_fav_trails(email):
 
-    user_fav_trails = FavoriteTrail.query.filter(
-        User.user_id == user_id).first()
+    all_fav_trails = []
+    user = User.query.filter(User.email == email).first()
+    fav_trails = user.favorite_trails
 
-    user_fav_trails_list = []
-    for trail in user_fav_trails:
-        user_fav_trails.append(trail)
-    return user_fav_trails_list
+    for trail in fav_trails:
+        all_fav_trails.append(trail.trail_name)
+    return all_fav_trails
 
 
 def create_park_entry(user):

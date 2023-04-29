@@ -18,12 +18,11 @@
 
         <p>
             <form action="/users/{{ user.user_id }}" method="POST">
-                <p><label></label>Reflect on your national park adventures below</p>
+                <p><label></label>Save your favorite {{ park.np_name }} memory below</p>
                 <textarea id="park-entries" name="park_entry" rows="4" cols="50"></textarea>
                 <br>
                 <input type="submit" value="Submit">
-        </form>
-              
+            </form>   
         </p>
 
        {% endfor %} 
@@ -46,5 +45,6 @@
 
 
 <script src="/static/js/addFavorites.js"></script>
+<script src="/static/js/addEntries.js"></script>
 </html>
 
