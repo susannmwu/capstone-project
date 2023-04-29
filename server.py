@@ -48,6 +48,21 @@ def all_users():
     return render_template("all_users.html", users=users)
 
 
+@app.route("/user_profile")
+def show_user_profile():
+    """View user individual profile"""
+    if "user_email" in session:
+        logged_in_email = session["user_email"]
+        user = crud.get_user_by_email(logged_in_email)
+        user_id = user.user_id
+        return redirect(f"/users/{user_id}")
+    else:
+        flash("Please log in to view user profile")
+        return("/")
+
+
+
+
 @app.route("/users", methods=["POST"])
 def register_user():
     """Create a new user."""
@@ -171,17 +186,58 @@ def add_favorite_park(np_id):
 
     # if np_id already exists in the user's favorite park list, then flash the message
     elif national_park in user_fav_parks:
-        flash(f"{national_park.np_name} already exists in your favorite parks list")
+        flash(
+            f" '{national_park.np_name}' already exists in your favorite parks list")
 
     # otherwise, create a new park and flash the message
     else:
         fav_park = crud.create_fav_park(user, national_park)
 
         flash(
-            f"Success! Added {national_park.np_name} to your favorite parks list")
+            f"Success! Added '{national_park.np_name}' to your favorite parks list")
 
     return render_template("user_details.html", user=user)
 
+
+# @app.route("/national-parks/trails/<trail_name>", methods=["POST"])
+# def add_favorite_trail(trail_name):
+#     """Add trail to user's favorites"""
+
+#     # grabbing the following information from html form
+#     trail_description = request.args.get("description")
+#     parkcode = request.args.get("parkcode")
+
+#     logged_in_email = session.get("user_email")
+#     user = crud.get_user_by_email(logged_in_email)
+#     np_id = crud.get_np_by_id(parkcode)
+#     parkcode = crud.get_np_by_parkcode(parkcode)
+#     national_park = crud.get_np_by_id(np_id)
+
+#     user_fav_trails = crud.get_user_fav_trail(logged_in_email)
+
+#     if logged_in_email is None:
+#         flash("You must log in to add a trail to your favorite trails list")
+
+#     elif trail_name in user_fav_trails:
+#         flash(f"Trail already exists in your list")
+
+#     else:
+#         new_fav_trail = crud.create_fav_trail(
+#             user, np_id, trail_name, trail_description)
+
+#         db.session.add(new_fav_trail)
+#         db.session.commit()
+#         flash(
+#             f"You've added {trail_name} trail to your favorites trail list")
+
+#     # query db for favorite trails with user and trail name and parkcode
+#     # if there's a match -> "you've already added this trail"
+
+#     # create a crud function to query national_park from parkcode
+#     # if not create a new favorite trail
+#     # need to get np_id
+
+#     return render_template("user_details.html", user=user, trail_description=trail_description)
 
 @app.route("/national-parks/trails/<trail_name>", methods=["POST"])
 def add_favorite_trail(trail_name):
@@ -192,28 +248,31 @@ def add_favorite_trail(trail_name):
     parkcode = request.form.get("parkcode")
 
     logged_in_email = session.get("user_email")
-
     user = crud.get_user_by_email(logged_in_email)
-    user_fav_trails = crud.get_user_fav_trail(logged_in_email)
 
-    parkcode = crud.get_np_by_parkcode(parkcode)
-    np_id = crud.get_np_by_id(parkcode)
-    national_park = crud.get_np_by_id(np_id)
+    national_park = crud.get_np_by_parkcode(parkcode)
+
+    # getting users favorite trails
+    user_fav_trails = user.favorite_trails
+
+    print("########")
+    print(user_fav_trails)
 
     if logged_in_email is None:
         flash("You must log in to add a trail to your favorite trails list")
 
-    elif np_id in user_fav_trails:
-
-        flash(
-            f"You've added {national_park.trail_name} trail to your favorites trail list")
+    # need to double check syntax for line 248
+    elif trail_name and parkcode in user_fav_trails:
+        flash("Trail already exists in your favorite trails list")
 
     else:
         new_fav_trail = crud.create_fav_trail(
-            user, np_id, trail_name, trail_description)
+            user, national_park.np_id, trail_name, trail_description)
 
         db.session.add(new_fav_trail)
         db.session.commit()
+        flash(
+            f"Success! Added '{trail_name}' trail to your favorites trail list")
 
     # query db for favorite trails with user and trail name and parkcode
     # if there's a match -> "you've already added this trail"
@@ -223,6 +282,23 @@ def add_favorite_trail(trail_name):
     # need to get np_id
 
     return render_template("user_details.html", user=user, trail_description=trail_description)
+
+
+@app.route("/users/<user_id>", methods=["POST"])
+def add_park_entry():
+    """Add entry to user's favorites park"""
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+
+    park_entry = request.form.get("park_entry")
+
+    new_park_entry = crud.create_park_entry(user, park_entry)
+
+    db.session.add(new_park_entry)
+    db.session.commit()
+    flash(f"Sucess! Park entry recorded")
+
+    return render_template("user_details.html", user=user, park_entry=park_entry)
 
 
 @app.route("/nps-tweets")

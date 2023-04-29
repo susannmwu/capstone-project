@@ -17,9 +17,9 @@
         </p>
 
         <p>
-         <form action="">
+            <form action="/users/{{ user.user_id }}" method="POST">
                 <p><label></label>Reflect on your national park adventures below</p>
-                <textarea id="" name="" rows="4" cols="50"></textarea>
+                <textarea id="park-entries" name="park_entry" rows="4" cols="50"></textarea>
                 <br>
                 <input type="submit" value="Submit">
         </form>
@@ -35,7 +35,9 @@
     {% for park in user.favorite_trails %}
     <p>
         {{ park.trail_name }} 
-
+    <p>   
+        {{ park. trail_description }}
+    </p> 
     </p>
     {% endfor %} 
     

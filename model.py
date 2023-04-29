@@ -53,6 +53,7 @@ class FavoritePark(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     np_id = db.Column(db.Integer, db.ForeignKey(
         "national_parks.np_id"))
+    entry = db.Column(db.String)
 
     def __repr__(self):
         return f"<Favorite_Park np_id={self.np_id} np_name={self.national_park}>"
