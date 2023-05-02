@@ -33,11 +33,13 @@ def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
 
-def create_national_parks(park_code, np_name, description, image_url):
+def create_national_parks(park_code, np_name, latitude, longitude, description, image_url):
     """Create a National Park."""
 
     np = NationalParks(park_code=park_code,
                        np_name=np_name,
+                       latitude=latitude,
+                       longitude=longitude,
                        description=description,
                        image_url=image_url)
 
@@ -93,7 +95,8 @@ def remove_fav_park(user_id, np_id):
 
     for park in user_fav_park:
         if park.np_id == np_id:
-            pass
+            park_removal = park.np_id
+    return park_removal
 
 
 def create_fav_trail(user, np_id, trail_name, trail_description):
@@ -118,7 +121,7 @@ def get_all_users_fav_trails(email):
     return all_fav_trails
 
 
-def create_park_entry(user):
-    park_entry = FavoritePark(user_id=user.user_id)
+# def create_park_entry(user):
+#     park_entry = FavoritePark(user_id=user.user_id)
 
-    return park_entry
+#     return park_entry

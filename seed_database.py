@@ -52,11 +52,14 @@ for park in parks_list:
 for park in national_parks:
     parkcode = park.get("parkCode")
     fullname = park.get("fullName")
+    latitude = park.get("latitude")
+    longitude = park.get("longitude")
     description = park.get("description")
     image_url = park["images"][0]["url"]
     # print(f"{fullname}")
     # print(f"{image_url}")
-    np = crud.create_national_parks(parkcode, fullname, description, image_url)
+    np = crud.create_national_parks(
+        parkcode, fullname, latitude, longitude, description, image_url)
     model.db.session.add(np)
 
 model.db.session.commit()

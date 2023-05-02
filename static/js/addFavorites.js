@@ -1,8 +1,10 @@
 "use strict;"
 
-const favListAdderButton = document.querySelector("#add-fav-parks");
+const addPark = document.querySelector("#add-park");
 const addToList = () => {document.querySelector("#list").insertAdjacentHTML("beforeend", "")};
-favListAdderButton.addEventListener("click", addToList);
+addPark.addEventListener("click", addToList);
+
+const removePark = document.querySelector("#remove-park");
 
 
 const addToTrailList = () => {document.querySelector("fav-trails-list").insertAdjacentHTML("beforeend", "")};

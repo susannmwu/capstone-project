@@ -19,12 +19,13 @@
           <p>
             {{ trail["name"] }}
            <p>
-            <p>
+            <ul>
               {{ trail["description"] }}
-            </p>
-            
+            </ul>
+            <ul>
+              <input type="submit" value="Add trail to favorites">
+            </ul>
             <img id="trail-images"src="{{ trail["images"] }}" alt="">
-
 
 
             <section id="fav-trails">
@@ -34,15 +35,11 @@
 
             <input name="description" type="hidden" value="{{ trail['description'] }}">     
             <input name="parkcode" type="hidden" value="{{ parkCode }}"> 
-            <input type="submit" value="Add trail to favorites">
-
             </form>
             {% endif %}
             </section>
 
         {% endfor %}
-
-
   </div>
 
   {% endblock %}

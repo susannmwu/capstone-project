@@ -65,8 +65,12 @@ border: 2px solid black;
   text-align: center;
 }
 
-/* Twitter page */
+li {
+  display: inline-block
+}
 
-#nps-tweets {
-  align: center; 
+.map,
+#map {
+width: 100%;
+height: 100%;
 }

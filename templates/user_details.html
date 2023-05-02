@@ -4,47 +4,57 @@
     {% extends 'base.html' %}
     {% block title %} {{ user.first_name }}'s Profile {% endblock %}
     <link rel="stylesheet" href="/static/styles.css">
+
 </head>
 <body>
     {% block body %}
 
     <h1>Welcome back, {{ user.first_name }}</h1>
-    <h3>Favorite parks list</h3>
+    <h3>Favorite parks</h3>
     <p id="list">
-    {% for park in user.favorite_parks %}
-        <p>
-            {{ park.np_name }}
-        </p>
 
-        <p>
+
+    {% for park in user.favorite_parks %}
+    <ul>
+        <li>
+            {{ park.np_name }}
+        </li>
+
+    </ul>   
+        <!-- <p>
             <form action="/users/{{ user.user_id }}" method="POST">
-                <p><label></label>Save your favorite {{ park.np_name }} memory below</p>
+                <p><label></label>What is your favorite {{ park.np_name }} memory?</p>
                 <textarea id="park-entries" name="park_entry" rows="4" cols="50"></textarea>
                 <br>
                 <input type="submit" value="Submit">
             </form>   
-        </p>
+        </p> -->
 
        {% endfor %} 
     </p>
 
-    <h3>Favorite trails list</h3>
+    
+    <h3>Favorite trails</h3>
 
     <p id="fav-trails-list">
     {% for park in user.favorite_trails %}
-    <p>
+
         {{ park.trail_name }} 
-    <p>   
+    <ul>
         {{ park. trail_description }}
-    </p> 
+    </ul>
+
     </p>
     {% endfor %} 
-    
+
+
+
+
+    <script src="/static/js/addFavorites.js"></script>
+
+
+
     {% endblock %}
 </body>
 
-
-<script src="/static/js/addFavorites.js"></script>
-<script src="/static/js/addEntries.js"></script>
 </html>
-

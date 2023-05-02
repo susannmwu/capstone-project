@@ -33,6 +33,8 @@ class NationalParks(db.Model):
     np_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     park_code = db.Column(db.String, nullable=False)
     np_name = db.Column(db.String, unique=True)
+    latitude = db.Column(db.String)
+    longitude = db.Column(db.String)
     description = db.Column(db.String)
     image_url = db.Column(db.String)
 
@@ -53,6 +55,8 @@ class FavoritePark(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     np_id = db.Column(db.Integer, db.ForeignKey(
         "national_parks.np_id"))
+    latitude = db.Column(db.String)
+    longitude = db.Column(db.String)
     entry = db.Column(db.String)
 
     def __repr__(self):

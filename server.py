@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, session, redirect
+from flask import Flask, render_template, request, flash, session, redirect, jsonify
 from model import connect_to_db, db
 
 from jinja2 import StrictUndefined
@@ -173,7 +173,7 @@ def find_trails():
 
 @app.route("/national-parks/<np_id>/favorite-parks", methods=["POST"])
 def add_favorite_park(np_id):
-    """Add park to user's favorites"""
+    """Add park to user's favorite parks list"""
 
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
@@ -198,6 +198,27 @@ def add_favorite_park(np_id):
     return render_template("user_details.html", user=user)
 
 
+@app.route("/national-parks/<np_id>/remove-fav-park", methods=["POST"])
+def remove_favorite_park(np_id):
+    """Remove park from user's favorite parks list"""
+
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    user_id = user.id
+
+    if logged_in_email is None:
+        flash("You must log in to remove a park to your favorite parks list")
+    else:
+        park_to_remove = crud.remove_fav_park(user_id, np_id)
+
+        db.session.delete(park_to_remove)
+        db.session.commit()
+
+        flash(f"park was removed from your favorites list")
+
+    redirect("user_details.html")
+
+
 @app.route("/national-parks/trails/<trail_name>", methods=["POST"])
 def add_favorite_trail(trail_name):
     """Add trail to user's favorites"""
@@ -214,8 +235,7 @@ def add_favorite_trail(trail_name):
     # getting all users favorite trails
     user_fav_trails = crud.get_all_users_fav_trails(logged_in_email)
 
-    print("########")
-    print(user_fav_trails)
+    # print(user_fav_trails)
 
     if logged_in_email is None:
         flash("You must log in to add a trail to your favorite trails list")
@@ -243,21 +263,61 @@ def add_favorite_trail(trail_name):
     return render_template("user_details.html", user=user, trail_description=trail_description)
 
 
-@app.route("/users/<user_id>", methods=["POST"])
-def add_park_entry():
-    """Add entry to user's favorites park"""
+# @app.route("/national-parks/trails/<trail_name>", methods=["POST"])
+# def remove_favorite_trail(trail_name):
+#     logged_in_email = session.get("user_email")
+#     user = crud.get_user_by_email(logged_in_email)
+
+#     national_park = crud.get_np_by_parkcode(parkcode)
+#     pass
+
+
+# @app.route("/users/<user_id>", methods=["POST"])
+# def add_park_entry():
+#     """Add entry to user's favorites park"""
+#     logged_in_email = session.get("user_email")
+#     user = crud.get_user_by_email(logged_in_email)
+
+#     park_entry = request.form.get("park_entry")
+
+#     new_park_entry = crud.create_park_entry(user, park_entry)
+
+#     db.session.add(new_park_entry)
+#     db.session.commit()
+#     flash(f"Sucess! Park entry recorded")
+
+#     return render_template("user_details.html", user=user, park_entry=park_entry)
+
+@app.route("/map")
+def view_fav_parks_map():
+    """Show map of user's favorite national parks"""
+
+    return render_template("map.html")
+
+
+@app.route("/api/map")
+def map_info():
+    """JSON information about national park latitude and longitude"""
+
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
 
-    park_entry = request.form.get("park_entry")
+    coordinates = []
 
-    new_park_entry = crud.create_park_entry(user, park_entry)
+    # query for user's favorite park
+    # loop through np list
+    # long and lat coming from np objects
 
-    db.session.add(new_park_entry)
-    db.session.commit()
-    flash(f"Sucess! Park entry recorded")
+    user_fav_parks = user.favorite_parks
 
-    return render_template("user_details.html", user=user, park_entry=park_entry)
+    for park in user_fav_parks:
+        lat = float(park.latitude)
+        long = float(park.longitude)
+        np_name = park.np_name
+        coordinates.append(
+            {"national park": np_name, "latitude": lat, "longitude": long})
+
+    return jsonify(coordinates)
 
 
 @app.route("/nps-tweets")
