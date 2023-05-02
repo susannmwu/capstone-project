@@ -11,27 +11,20 @@
 
     <h1>Welcome back, {{ user.first_name }}</h1>
     <h3>Favorite parks</h3>
-    <p id="list">
 
-
+    <P>
     {% for park in user.favorite_parks %}
     <ul>
         <li>
             {{ park.np_name }}
         </li>
-
-    </ul>   
-        <!-- <p>
-            <form action="/users/{{ user.user_id }}" method="POST">
-                <p><label></label>What is your favorite {{ park.np_name }} memory?</p>
-                <textarea id="park-entries" name="park_entry" rows="4" cols="50"></textarea>
-                <br>
-                <input type="submit" value="Submit">
-            </form>   
-        </p> -->
-
+    </ul> 
+    
        {% endfor %} 
-    </p>
+       
+    <ul class="map">
+        <div id="map"></div>
+    </ul>
 
     
     <h3>Favorite trails</h3>
@@ -46,8 +39,11 @@
 
     </p>
     {% endfor %} 
-
-
+    <script src="/static/js/favNpMap.js"></script>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcKtg0mmP8bMGMF1OH-DELsrGF7ET0dMs&callback=initMap">
+    </script>
     {% endblock %}
 </body>
 

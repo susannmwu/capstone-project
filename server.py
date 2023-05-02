@@ -315,7 +315,9 @@ def map_info():
         long = float(park.longitude)
         np_name = park.np_name
         coordinates.append(
-            {"national park": np_name, "latitude": lat, "longitude": long})
+            {"np": np_name,
+             "latitude": lat,
+             "longitude": long})
 
     return jsonify(coordinates)
 

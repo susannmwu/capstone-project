@@ -3,9 +3,10 @@
 function initMap() {
     const map = new google.maps.Map(document.querySelector("#map"), {
         center: {
-            lat: 72,
-            lng: -140,
+            lat: 39.8097343,
+            lng: -98.5556199,
           },
+        zoom: 3
         });
     
     const parkInfo = new google.maps.InfoWindow();
@@ -15,13 +16,14 @@ function initMap() {
         .then((coordinates) => {
             for (const coords of coordinates) {
                 const parkInfoContent = `
-                ${coords.np_name}`
+                <li>${coords.np}</li>`;
 
                 const parkMarker = new google.maps.Marker({
                     position: {
                         lat: coords.latitude,
                         lng: coords.longitude,
                     },
+
                     map: map
                 
                 });
@@ -34,4 +36,4 @@ function initMap() {
         })
 
         };
-        
+       
