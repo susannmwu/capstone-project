@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  
-<link rel="stylesheet" href="/static/styles.css">
+{% extends 'base.html' %}
 
+{% block head %}
+<head>
+ <style>
+  html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+  .map,
+  #map {
+  width: 100%;
+  height: 100%
+}
+
+ </style> 
+{% endblock %}
 </head>
+
+
+{% block body %}
 <body>
 
   <section class="map">
-    <div id="map"></div>
+    <div id="map" style="height: 100%; width: 100%"></div>
   </section>
 
   <script src="/static/js/favNpMap.js"></script>
   <script
     async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOduyf9JL69oUSd04cLh2nR6ocKoquwpM&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcKtg0mmP8bMGMF1OH-DELsrGF7ET0dMs&callback=initMap">
   </script>
-  
+  {% endblock %}
 </body>
 </html>

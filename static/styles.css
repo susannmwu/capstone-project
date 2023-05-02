@@ -2,7 +2,7 @@ body {
   font-family: Arial, Helvetica, sans-serif
 }
 
- img {
+img {
 
     height: 700px;
     width: 700px;
@@ -67,10 +67,4 @@ border: 2px solid black;
 
 li {
   display: inline-block
-}
-
-.map,
-#map {
-width: 100%;
-height: 100%;
 }
