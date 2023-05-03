@@ -4,7 +4,7 @@
   {% extends 'base.html' %}
   {% block title %}Trails Search{% endblock %}
 
-  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/static/css/styles.css">
 
 </head>
 <body>
@@ -23,18 +23,20 @@
               {{ trail["description"] }}
             </ul>
             <ul>
-              <input type="submit" value="Add trail to favorites">
+
             </ul>
             <img id="trail-images"src="{{ trail["images"] }}" alt="">
 
 
             <section id="fav-trails">
               {% if session.get('user_email') %}
-            
+
             <form action="/national-parks/trails/ {{ trail['name'] }}" method="POST">
 
             <input name="description" type="hidden" value="{{ trail['description'] }}">     
             <input name="parkcode" type="hidden" value="{{ parkCode }}"> 
+            <input type="submit" value="Add trail to favorites">
+
             </form>
             {% endif %}
             </section>

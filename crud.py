@@ -121,7 +121,7 @@ def get_all_users_fav_trails(email):
     return all_fav_trails
 
 
-# def create_park_entry(user):
-#     park_entry = FavoritePark(user_id=user.user_id)
+def create_park_entry(user):
+    park_entry = FavoritePark(user_id=user.user_id, entry=FavoritePark.entry)
 
-#     return park_entry
+    return park_entry

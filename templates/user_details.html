@@ -3,7 +3,7 @@
 <head>
     {% extends 'base.html' %}
     {% block title %} {{ user.first_name }}'s Profile {% endblock %}
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
 
 </head>
 <body>
@@ -11,6 +11,9 @@
 
     <h1>Welcome back, {{ user.first_name }}</h1>
     <h3>Favorite parks</h3>
+    <ul class="map">
+        <div id="map"></div>
+    </ul>
 
     <P>
     {% for park in user.favorite_parks %}
@@ -19,31 +22,42 @@
             {{ park.np_name }}
         </li>
     </ul> 
-    
+        <ul>
+           <form action="/users/{{ user.user_id }}" method="POST">
+               <p><label></label>What is your favorite {{ park.np_name }} memory?</p>
+               <input type="text" name="park_entry">
+            <p>
+            <input type="submit" value="Submit">
+            </p>
+           </form>  
+        </ul>
+
        {% endfor %} 
-       
-    <ul class="map">
-        <div id="map"></div>
-    </ul>
+
 
     
     <h3>Favorite trails</h3>
 
     <p id="fav-trails-list">
-    {% for park in user.favorite_trails %}
+        {% for park in user.favorite_trails %}
+        <ul>
+            {{ park.trail_name }} 
+        </ul>
 
-        {{ park.trail_name }} 
-    <ul>
-        {{ park. trail_description }}
-    </ul>
+        <ul>
+            {{ park.trail_description }}
+        </ul>
+        {% endfor %} 
 
     </p>
-    {% endfor %} 
+
+    <script src="/static/js/addFavorites.js"></script>
     <script src="/static/js/favNpMap.js"></script>
     <script
       async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcKtg0mmP8bMGMF1OH-DELsrGF7ET0dMs&callback=initMap">
     </script>
+
     {% endblock %}
 </body>
 

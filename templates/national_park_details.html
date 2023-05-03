@@ -2,8 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="/static/styles.css">
-
+  <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
   {% extends 'base.html' %}
@@ -31,8 +30,8 @@
 
 <form action="/national-parks/{{ national_park.np_id }}/favorite-parks" method="POST">
 
- <input id="add-park" type="submit" value="Add park">
- <input id="remove-park" type="submit" value="Remove park">
+<input id="add-park" type="submit" value="Add park">
+ <!-- <input id="remove-park" type="submit" value="Remove park"> -->
 
 </form>
 {% endif %}

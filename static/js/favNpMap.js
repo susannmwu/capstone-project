@@ -6,7 +6,7 @@ function initMap() {
             lat: 39.8097343,
             lng: -98.5556199,
           },
-        zoom: 3
+        zoom: 4
         });
     
     const parkInfo = new google.maps.InfoWindow();
