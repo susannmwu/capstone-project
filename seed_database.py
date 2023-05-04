@@ -79,23 +79,15 @@ fav_park = model.FavoritePark(
 model.db.session.add(fav_park)
 model.db.session.commit()
 
+
+yose_entry = crud.create_park_entry(
+    susan, "Took a nap during the Clouds Rest hike")
+model.db.session.add(yose_entry)
+model.db.session.commit()
+
 # cloudsrest = model.FavoriteTrail.query.filter(model.Trail.trail_name)
 # fav_trail = model.FavoriteTrail(
 #     user_id=susan.user_id, trail_id=cloudsrest.trail_id)
 
 # model.db.session.add(fav_trail)
-# model.db.session.commit()
-
-# # Create a NP
-# yosemite = crud.create_national_parks("Yosemite National Park",
-#                                       "The geology of the Yosemite area is characterized by granite rocks and remnants of older rock.",
-#                                       "hiking")
-
-# model.db.session.add(yosemite)
-# model.db.session.commit()
-
-# # Create a trail
-# clouds_rest = crud.create_np_trails("Clouds Rest", "Cloud's Rest, a massive granite formation just northeast of Half Dome in Yosemite Valley, is famous for its very high degree of visual prominence in the valley as well as its razor-sharp ridge near the summit.",
-#                                     "Out & back", 12.2, "strenuous")
-# model.db.session.add(clouds_rest)
 # model.db.session.commit()

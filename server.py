@@ -261,9 +261,9 @@ def add_favorite_trail(trail_name):
     return render_template("user_details.html", user=user, trail_description=trail_description)
 
 
-@app.route("/national-park-entry", methods=["POST"])
+@app.route("/np-entry.json", methods=["POST"])
 def add_park_entry():
-    park_entry = request.form.get("park_enty")
+    park_entry = request.json.get("park_entries")
 
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
@@ -276,12 +276,7 @@ def add_park_entry():
         db.session.commit()
         flash(f"Sucess! You've added a park memory")
 
-
-@app.route("/map")
-def view_fav_parks_map():
-    """Show map of user's favorite national parks"""
-
-    return render_template("map.html")
+    return jsonify({"entry": park_entry})
 
 
 @app.route("/api/map")

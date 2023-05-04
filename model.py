@@ -19,6 +19,7 @@ class User(db.Model):
         "NationalParks", secondary="favorite_parks", back_populates="user_fav_parks")
     favorite_trails = db.relationship(
         "FavoriteTrail", back_populates="user")
+    user_entries = db.relationship("ParkEntry", back_populates="user")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email}>"
@@ -42,6 +43,8 @@ class NationalParks(db.Model):
         "User", secondary="favorite_parks", back_populates="favorite_parks")
     national_park_trails = db.relationship(
         "FavoriteTrail", back_populates="national_park")
+    entries = db.relationship(
+        "ParkEntry", back_populates="park_entry")
 
     def __repr__(self):
         return f"<National_Park np_id={self.np_id} np_name={self.np_name}>"
@@ -55,9 +58,6 @@ class FavoritePark(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     np_id = db.Column(db.Integer, db.ForeignKey(
         "national_parks.np_id"))
-    latitude = db.Column(db.String)
-    longitude = db.Column(db.String)
-    entry = db.Column(db.String)
 
     def __repr__(self):
         return f"<Favorite_Park np_id={self.np_id} np_name={self.national_park}>"
@@ -81,8 +81,24 @@ class FavoriteTrail(db.Model):
         return f"<Favorite_Trail fav_trail_id={self.favorite_trail_id} trail_name={self.trail_name}>"
 
 
-##############################################################################
-# Helper functions
+class ParkEntry(db.Model):
+    __tablename__ = "park_entries"
+
+    entry_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    np_id = db.Column(db.Integer, db.ForeignKey("national_parks.np_id"))
+    entry = db.Column(db.Text)
+
+    user = db.relationship("User", back_populates="user_entries")
+    park_entry = db.relationship(
+        "NationalParks", back_populates="entries")
+
+    def __repr__(self):
+        return f"<Entry entry_id={self.entry_id}>"
+
+    ##############################################################################
+    # Helper functions
+
 
 def connect_to_db(flask_app, db_uri="postgresql:///trails", echo=False):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

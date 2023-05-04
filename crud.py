@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, User, NationalParks, FavoritePark, FavoriteTrail, connect_to_db
+from model import db, User, NationalParks, FavoritePark, FavoriteTrail, ParkEntry, connect_to_db
 
 if __name__ == '__main__':
     from server import app
@@ -121,7 +121,20 @@ def get_all_users_fav_trails(email):
     return all_fav_trails
 
 
-def create_park_entry(user):
-    park_entry = FavoritePark(user_id=user.user_id, entry=FavoritePark.entry)
+def create_park_entry(user, entry):
+    """Create and return a park entry of user's favorite park"""
+
+    park_entry = ParkEntry(user_id=user.user_id, entry=entry)
 
     return park_entry
+
+
+def get_user_all_park_entries(email):
+
+    all_entries = []
+    user = User.query.filter(User.email == email).first()
+    park_entries = user.user_entries
+
+    for entry in park_entries:
+        all_entries.append(entry)
+    return all_entries

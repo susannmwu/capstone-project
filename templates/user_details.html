@@ -21,21 +21,30 @@
         <li>
             {{ park.np_name }}
         </li>
+
     </ul> 
-        <ul>
-           <form action="/users/{{ user.user_id }}" method="POST">
-               <p><label></label>What is your favorite {{ park.np_name }} memory?</p>
-               <input type="text" name="park_entry">
-            <p>
-            <input type="submit" value="Submit">
-            </p>
-           </form>  
-        </ul>
+    <P>
 
        {% endfor %} 
 
+    <h3>Park memories</h3>
+            {% if session.get('user_email') %}
+        <p>
+            <form id="journal-entry-form">
+                <p><label></label>What is your favorite national park memory?</p>
+                <textarea id="entry-field" name="park_entry" rows="4" cols="50"></textarea>
+                <br>
+                <input type="submit" value="Save">
+            </form>   
+            {% endif %}
+        </p>
 
-    
+
+        <div id="entries">
+        {% for item in user.user_entries %}
+        <ul>{{item.entry}}</ul>
+        {% endfor %} 
+        </div>
     <h3>Favorite trails</h3>
 
     <p id="fav-trails-list">
@@ -53,6 +62,7 @@
 
     <script src="/static/js/addFavorites.js"></script>
     <script src="/static/js/favNpMap.js"></script>
+    <script src="/static/js/addEntries.js"></script>
     <script
       async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcKtg0mmP8bMGMF1OH-DELsrGF7ET0dMs&callback=initMap">
