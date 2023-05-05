@@ -261,8 +261,27 @@ def add_favorite_trail(trail_name):
     return render_template("user_details.html", user=user, trail_description=trail_description)
 
 
+# @app.route("/np-entry.json", methods=["POST"])
+# def add_park_entry():
+#     park_entry = request.json.get("park_entries")
+
+#     logged_in_email = session.get("user_email")
+#     user = crud.get_user_by_email(logged_in_email)
+
+#     if logged_in_email is None:
+#         flash("You must log in to add a memory of your favorite parks")
+#     else:
+#         new_park_entry = crud.create_park_entry(user, park_entry)
+#         db.session.add(new_park_entry)
+#         db.session.commit()
+#         flash(f"Sucess! You've added a park memory")
+
+#     return jsonify({"entry": park_entry})
+
+
 @app.route("/np-entry.json", methods=["POST"])
 def add_park_entry():
+    np = request.json.get("np_name")
     park_entry = request.json.get("park_entries")
 
     logged_in_email = session.get("user_email")
@@ -271,12 +290,12 @@ def add_park_entry():
     if logged_in_email is None:
         flash("You must log in to add a memory of your favorite parks")
     else:
-        new_park_entry = crud.create_park_entry(user, park_entry)
+        new_park_entry = crud.create_park_entry(user, np, park_entry)
         db.session.add(new_park_entry)
         db.session.commit()
         flash(f"Sucess! You've added a park memory")
 
-    return jsonify({"entry": park_entry})
+    return jsonify({"np": np, "entry": park_entry})
 
 
 @app.route("/api/map")

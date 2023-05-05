@@ -4,7 +4,9 @@ function addEntries(evt) {
     evt.preventDefault();
 
     const formInputs = {
+        np_name: document.querySelector("#np-field").value,
         park_entries: document.querySelector("#entry-field").value, 
+
     };
 
     fetch("/np-entry.json", {
@@ -17,6 +19,7 @@ function addEntries(evt) {
 
     .then(response => response.json())
     .then((addEntries) => {
+        document.querySelector("#entries").insertAdjacentHTML("beforeend", addEntries["np"],);
         document.querySelector("#entries").insertAdjacentHTML("beforeend", addEntries["entry"]);
     });
 }

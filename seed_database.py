@@ -80,10 +80,10 @@ model.db.session.add(fav_park)
 model.db.session.commit()
 
 
-yose_entry = crud.create_park_entry(
-    susan, "Took a nap during the Clouds Rest hike")
-model.db.session.add(yose_entry)
-model.db.session.commit()
+# yose_entry = crud.create_park_entry(
+#     susan, "Took a nap during the Clouds Rest hike")
+# model.db.session.add(yose_entry)
+# model.db.session.commit()
 
 # cloudsrest = model.FavoriteTrail.query.filter(model.Trail.trail_name)
 # fav_trail = model.FavoriteTrail(

@@ -121,10 +121,10 @@ def get_all_users_fav_trails(email):
     return all_fav_trails
 
 
-def create_park_entry(user, entry):
+def create_park_entry(user, np, entry):
     """Create and return a park entry of user's favorite park"""
 
-    park_entry = ParkEntry(user_id=user.user_id, entry=entry)
+    park_entry = ParkEntry(user_id=user.user_id, np=np, entry=entry)
 
     return park_entry
 

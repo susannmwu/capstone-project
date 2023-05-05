@@ -87,6 +87,7 @@ class ParkEntry(db.Model):
     entry_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     np_id = db.Column(db.Integer, db.ForeignKey("national_parks.np_id"))
+    np = db.Column(db.String)
     entry = db.Column(db.Text)
 
     user = db.relationship("User", back_populates="user_entries")
