@@ -19,9 +19,9 @@ function addEntries(evt) {
 
     .then(response => response.json())
     .then((addEntries) => {
-        document.querySelector("#entries").insertAdjacentHTML("beforeend", addEntries["np"],);
-        document.querySelector("#entries").insertAdjacentHTML("beforeend", addEntries["entry"]);
+        document.querySelector("#entries").insertAdjacentHTML("beforeend", `<ul><li class="add-bolding">${addEntries["np"]}<br></li><li>${addEntries["entry"]}</li></ul>`);
+
     });
 }
-
+// i could insert a line break to resolve the reformatting of the entries
 document.querySelector("#journal-entry-form").addEventListener("submit", addEntries);

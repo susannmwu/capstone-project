@@ -60,7 +60,7 @@ class FavoritePark(db.Model):
         "national_parks.np_id"))
 
     def __repr__(self):
-        return f"<Favorite_Park np_id={self.np_id} np_name={self.national_park}>"
+        return f"<Favorite_Park np_id={self.np_id} user_id={self.user_id}>"
 
 
 class FavoriteTrail(db.Model):

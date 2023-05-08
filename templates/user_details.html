@@ -10,26 +10,61 @@
     {% block body %}
 
     <h1>Welcome back, {{ user.first_name }}</h1>
-    <h3>Visited parks</h3>
-    <ul class="map">
-        <div id="map"></div>
-    </ul>
+    <h3>Favorite parks</h3>
 
-    <p>
-        {% for park in user.favorite_parks %}
-        <ul>
-            <li> {{ park.np_name }} </li>
+        <ul class="map">
+            <div id="map"></div>
         </ul>
-        {% endfor %} 
 
-    </p>
+        <div id="favorite_parks_list">
+                {% for park in user.favorite_parks %}
+            <ul>
+                <li id="fav_park"> {{ park.np_name }} </li>
+            </ul> 
 
+                {% endfor %} 
+        </div>
+            
+            <ul>
+            <form id="park_to_remove">
+                <p>
+                <label>Select a park to remove</label>
+                </p>
+
+                <select id="remove_park_field" name="remove_park">
+                    <ul>
+                    {% for park in user.favorite_parks %}
+
+                    <option>{{ park.np_name }}</option>
+
+                    {% endfor %}
+                    </ul>
+                </select>
+
+
+                <input type="submit" value="Remove">
+
+            </form>
+            </ul>
 
         <h3>Park memories</h3>
+
+        <div id="entries">
+            {% for item in user.user_entries %}
+            <ul>
+            <li id="np_name"> {{ item.np }}<br></li>
+
+            <li> {{ item.entry }} </li>
+            </ul>
+            {% endfor %} 
+
+        </div>
+
+
         {% if session.get('user_email') %}
-    <ul>
+        <ul>
         <form id="journal-entry-form">
-            <p><label>Select a park you'd like to record a memory from</label></p>
+            <p><label>Select a national park and record your park highlights</label></p>
             <select id="np-field" name="np">
                 {% for park in user.favorite_parks %}
                 <option>{{ park.np_name }}</option>
@@ -42,18 +77,8 @@
             </p>
         </form>   
         {% endif %}
-    </ul>
-
-
-    <div id="entries">
-        {% for item in user.user_entries %}
-        <ul>
-        <li id="np_name"> {{item.np }} </li>
-        <li> {{item.entry}} </li>
         </ul>
-        {% endfor %} 
 
-    </div>
 
     <h3>Favorite trails</h3>
 
@@ -73,6 +98,7 @@
     <script src="/static/js/addFavorites.js"></script>
     <script src="/static/js/favNpMap.js"></script>
     <script src="/static/js/addEntries.js"></script>
+    <script src="/static/js/remove.js"></script>
     <script
       async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcKtg0mmP8bMGMF1OH-DELsrGF7ET0dMs&callback=initMap">

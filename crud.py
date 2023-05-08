@@ -88,15 +88,18 @@ def get_user_fav_park(user_id):
     return user_fav_parks_lst
 
 
-def remove_fav_park(user_id, np_id):
-    np_id = NationalParks.query.get(np_id)
-    user = User.query.get(user_id)
-    user_fav_park = user.favorite_parks
+def find_park_to_remove(user, park_name):
+    park = NationalParks.query.filter(
+        NationalParks.np_name == park_name).first()
+    park_to_remove = FavoritePark.query.filter(
+        FavoritePark.user_id == user.user_id, FavoritePark.np_id == park.np_id).first()
+    return park_to_remove
 
-    for park in user_fav_park:
-        if park.np_id == np_id:
-            park_removal = park.np_id
-    return park_removal
+
+# def find_park_entry_to_remove(user, entry):
+#     park = NationalParks.query.filter()
+#     entry_to_remove = ParkEntry.query.filter(
+#         ParkEntry.user_id == user.user_id, ParkEntry.np_id == park.np_id)
 
 
 def create_fav_trail(user, np_id, trail_name, trail_description):
