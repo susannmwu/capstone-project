@@ -3,14 +3,16 @@
 function initMap() {
     const map = new google.maps.Map(document.querySelector("#map"), {
         center: {
-            lat: 39.8097343,
-            lng: -98.5556199,
+            lat: 37.0902,
+            lng: -95.7129,
           },
         zoom: 4
         });
     
     const parkInfo = new google.maps.InfoWindow();
-
+    // need a list of markers 
+    // inside the fetch, we would need to go through the coordinates and append to 
+    // list of markers
     fetch("/api/map")
         .then((response) => response.json())
         .then((coordinates) => {
@@ -24,9 +26,10 @@ function initMap() {
                         lng: coords.longitude,
                     },
 
-                    map: map
-                
+                    map: map,
+                    
                 });
+                    
                 parkMarker.addListener("click", () => {
                     parkInfo.close();
                     parkInfo.setContent(parkInfoContent);

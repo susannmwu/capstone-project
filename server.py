@@ -197,25 +197,25 @@ def add_favorite_park(np_id):
     return render_template("user_details.html", user=user)
 
 
-# @app.route("/national-parks/<np_id>/remove-fav-park", methods=["POST"])
-# def remove_favorite_park(np_id):
-#     """Remove park from user's favorite parks list"""
+@app.route("/remove-fav-park", methods=["POST"])
+def remove_favorite_park():
+    """Remove park from user's favorite parks list"""
 
-#     logged_in_email = session.get("user_email")
-#     user = crud.get_user_by_email(logged_in_email)
-#     user_id = user.id
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    park_to_remove = request.form.get("remove_park")
 
-#     if logged_in_email is None:
-#         flash("You must log in to remove a park to your favorite parks list")
-#     else:
-#         park_to_remove = crud.remove_fav_park(user_id, np_id)
+    if logged_in_email is None:
+        flash("You must log in to remove a park to your favorite parks list")
+    else:
+        park_removal = crud.find_park_to_remove(user, park_to_remove)
 
-#         db.session.delete(park_to_remove)
-#         db.session.commit()
+        db.session.delete(park_removal)
+        db.session.commit()
 
-#         flash(f"park was removed from your favorites list")
+        flash(f"'{park_to_remove}' was removed from your favorites list")
 
-#     return render_template("user_details.html")
+    return render_template("user_details.html", user=user, park_to_remove=park_to_remove)
 
 
 @app.route("/national-parks/trails/<trail_name>", methods=["POST"])
@@ -305,7 +305,8 @@ def remove_park():
 
         db.session.delete(park_removal)
         db.session.commit()
-        flash(f"Sucess! You've removed a favorited park from your list")
+        flash(
+            f"Sucess! You've removed '{remove_park}' from your list")
     return jsonify({"np": remove_park})
 
 

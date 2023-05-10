@@ -6,6 +6,18 @@
       {% block title %}View all National Parks{% endblock %}
   
   <link rel="stylesheet" href="/static/css/styles.css">
+  <style>
+  .search {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+  </style>
 </head>
 <body>
 
@@ -14,6 +26,10 @@
   
 
   <h1>All National Parks</h1>
+  
+<div class="search">
+  <input type="text" placeholder="Search..">
+</div>
 
   <div class="parent">
     {% for national_park in national_parks %}

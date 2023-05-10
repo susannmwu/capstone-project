@@ -20,33 +20,31 @@
                 {% for park in user.favorite_parks %}
             <ul>
                 <li id="fav_park"> {{ park.np_name }} </li>
-            </ul> 
+            </ul>
 
                 {% endfor %} 
         </div>
             
-            <ul>
-            <form id="park_to_remove">
-                <p>
-                <label>Select a park to remove</label>
-                </p>
 
-                <select id="remove_park_field" name="remove_park">
-                    <ul>
-                    {% for park in user.favorite_parks %}
+                    {% if session.get('user_email') %}
+                <ul>
+                  <form action="/remove-fav-park" method="POST">
+                    <p>Select a park to remove from your favorites list</p>
+                    <select id="remove_park_field" name="remove_park">
+                        
+                        {% for park in user.favorite_parks %}
 
-                    <option>{{ park.np_name }}</option>
+                            <option>{{ park.np_name }}</option>
 
-                    {% endfor %}
-                    </ul>
-                </select>
+                        {% endfor %}
 
+                    </select>
 
-                <input type="submit" value="Remove">
-
-            </form>
-            </ul>
-
+                  <input type="submit" value="Remove">
+                    {% endif %}
+                 </form>
+                </ul>
+                
         <h3>Park memories</h3>
 
         <div id="entries">
@@ -98,7 +96,7 @@
     <script src="/static/js/addFavorites.js"></script>
     <script src="/static/js/favNpMap.js"></script>
     <script src="/static/js/addEntries.js"></script>
-    <script src="/static/js/remove.js"></script>
+    <script src="/static/js/removeFavorites.js"></script>
     <script
       async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcKtg0mmP8bMGMF1OH-DELsrGF7ET0dMs&callback=initMap">
