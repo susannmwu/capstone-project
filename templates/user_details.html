@@ -17,7 +17,7 @@
         </ul>
 
         <div id="favorite_parks_list">
-                {% for park in user.favorite_parks %}
+                {% for park in user.favorite_parks| sort(attribute="np_name") %}
             <ul>
                 <li id="fav_park"> {{ park.np_name }} </li>
             </ul>
@@ -37,18 +37,18 @@
                             <option>{{ park.np_name }}</option>
 
                         {% endfor %}
-
+                    
                     </select>
 
                   <input type="submit" value="Remove">
                     {% endif %}
                  </form>
                 </ul>
-                
+
         <h3>Park memories</h3>
 
         <div id="entries">
-            {% for item in user.user_entries %}
+            {% for item in user.user_entries| sort(attribute="np")  %}
             <ul>
             <li id="np_name"> {{ item.np }}<br></li>
 

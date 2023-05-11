@@ -64,6 +64,14 @@ def get_np_by_parkcode(park_code):
     return NationalParks.query.filter(park_code == park_code).first()
 
 
+def get_np_id_by_np_name(np_name):
+    """Return national park id by np_name"""
+    np_name = NationalParks.query.filter(
+        NationalParks.np_name == np_name).first()
+    national_park_id = np_name.np_id
+    return national_park_id
+
+
 def create_fav_park(user, national_park):
     """Create and return a park as user's favorite parks"""
 

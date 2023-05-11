@@ -279,35 +279,35 @@ def add_park_entry():
     return jsonify({"np": np, "entry": park_entry})
 
 
-@app.route("/remove-park.json", methods=["POST"])
-def remove_park():
-    remove_park = request.json.get("remove_park")
-    # print(remove_park)
+# @app.route("/remove-park.json", methods=["POST"])
+# def remove_park():
+#     remove_park = request.json.get("remove_park")
+#     # print(remove_park)
 
-    logged_in_email = session.get("user_email")
-    user = crud.get_user_by_email(logged_in_email)
-    # print(user)
-    if not user:
-        flash("You must log in to remove a park from your list")
-    else:
-        # park_object = NationalParks.query.filter(
-        #     NationalParks.np_name == remove_park).first()
-        # print(park_object)
-        # park_to_remove = FavoritePark.query.filter(
-        #     FavoritePark.user_id == user.user_id, FavoritePark.np_id == park_object.np_id).first()
-        # print(park_to_remove)
-        # # park_removal = crud.remove_fav_park(remove_park)
-        # db.session.delete(park_to_remove)
-        # db.session.commit()
-        # flash(f"Sucess! You've removed a favorited park from your list")
+#     logged_in_email = session.get("user_email")
+#     user = crud.get_user_by_email(logged_in_email)
+#     # print(user)
+#     if not user:
+#         flash("You must log in to remove a park from your list")
+#     else:
+#         # park_object = NationalParks.query.filter(
+#         #     NationalParks.np_name == remove_park).first()
+#         # print(park_object)
+#         # park_to_remove = FavoritePark.query.filter(
+#         #     FavoritePark.user_id == user.user_id, FavoritePark.np_id == park_object.np_id).first()
+#         # print(park_to_remove)
+#         # # park_removal = crud.remove_fav_park(remove_park)
+#         # db.session.delete(park_to_remove)
+#         # db.session.commit()
+#         # flash(f"Sucess! You've removed a favorited park from your list")
 
-        park_removal = crud.find_park_to_remove(user, remove_park)
+#         park_removal = crud.find_park_to_remove(user, remove_park)
 
-        db.session.delete(park_removal)
-        db.session.commit()
-        flash(
-            f"Sucess! You've removed '{remove_park}' from your list")
-    return jsonify({"np": remove_park})
+#         db.session.delete(park_removal)
+#         db.session.commit()
+#         flash(
+#             f"Sucess! You've removed '{remove_park}' from your list")
+#     return jsonify({"np": remove_park})
 
 
 # @app.route("/remove-park-entry.json", methods=["POST"])
@@ -351,6 +351,19 @@ def map_info():
              "longitude": long})
 
     return jsonify(coordinates)
+
+
+@app.route("/search-park", methods=["POST"])
+def search_all_parks():
+    """Search for national parks and be redirected to national parks details page"""
+    np_name = request.form.get("search")
+
+    # print("############")
+    # print(np_name)
+
+    np_id = crud.get_np_id_by_np_name(np_name)
+
+    return redirect(f"/national-parks/{np_id}")
 
 
 @app.route("/nps-tweets")

@@ -26,10 +26,25 @@
   
 
   <h1>All National Parks</h1>
-  
-<div class="search">
-  <input type="text" placeholder="Search..">
-</div>
+
+
+  {% if session.get('user_email') %}
+  <ul>
+    <form action="search-park" method="POST">
+      <select id="search" name="search">
+          
+          {% for national_park in national_parks %}
+
+              <option>{{ national_park.np_name }}
+
+          {% endfor %}
+        
+      </select>
+      
+    <input type="submit" value="Search">
+      {% endif %}
+   </form>
+  </ul>
 
   <div class="parent">
     {% for national_park in national_parks %}
@@ -51,5 +66,6 @@
   </div>
   
   {% endblock %}
+
 </body>
 </html>
