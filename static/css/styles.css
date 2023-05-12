@@ -86,3 +86,6 @@ li {
 .add-bolding {
     font-weight: bold;
 }
+.carousel-inner {
+size: auto;
+}

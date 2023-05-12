@@ -61,9 +61,19 @@ for park in national_parks:
     np = crud.create_national_parks(
         parkcode, fullname, latitude, longitude, description, image_url)
     model.db.session.add(np)
-
 model.db.session.commit()
 
+for park in national_parks:
+    # gets the parkcode
+    parkcode = park.get("parkCode")
+    images = park["images"]
+    for item in images:
+        image_url = item["url"]
+        image_caption = item["caption"]
+        img = crud.create_park_images(
+            parkcode, image_url, image_caption)
+        model.db.session.add(img)
+model.db.session.commit()
 
 ########################################################################
 susan = crud.create_user("Susan", "Wu", "susanwu@gmail.com", "cats")

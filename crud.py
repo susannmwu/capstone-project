@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, User, NationalParks, FavoritePark, FavoriteTrail, ParkEntry, connect_to_db
+from model import db, User, NationalParks, FavoritePark, FavoriteTrail, ParkEntry, ParkImage, connect_to_db
 
 if __name__ == '__main__':
     from server import app
@@ -44,6 +44,15 @@ def create_national_parks(park_code, np_name, latitude, longitude, description, 
                        image_url=image_url)
 
     return np
+
+
+def create_park_images(park_code, image_url, image_caption):
+    """Create national park images"""
+
+    img = ParkImage(park_code=park_code, image_url=image_url,
+                    image_caption=image_caption)
+
+    return img
 
 
 def get_national_parks():
@@ -104,12 +113,6 @@ def find_park_to_remove(user, park_name):
     return park_to_remove
 
 
-# def find_park_entry_to_remove(user, entry):
-#     park = NationalParks.query.filter()
-#     entry_to_remove = ParkEntry.query.filter(
-#         ParkEntry.user_id == user.user_id, ParkEntry.np_id == park.np_id)
-
-
 def create_fav_trail(user, np_id, trail_name, trail_description):
     """Create and return a trail as user's favorite trail"""
 
@@ -149,3 +152,15 @@ def get_user_all_park_entries(email):
     for entry in park_entries:
         all_entries.append(entry)
     return all_entries
+
+
+def get_np_images(parkcode):
+
+    all_park_images = []
+   # filter park images by parkcode
+    images = ParkImage.query.filter(ParkImage.park_code == parkcode).all()
+
+    for img in images:
+        all_park_images.append(img.image_url)
+
+    return all_park_images

@@ -45,12 +45,14 @@ class NationalParks(db.Model):
         "FavoriteTrail", back_populates="national_park")
     entries = db.relationship(
         "ParkEntry", back_populates="park_entry")
+    images = db.relationship("ParkImage", back_populates="park")
 
     def __repr__(self):
         return f"<National_Park np_id={self.np_id} np_name={self.np_name}>"
 
 
 class FavoritePark(db.Model):
+
     __tablename__ = "favorite_parks"
 
     favorite_park_id = db.Column(
@@ -96,6 +98,22 @@ class ParkEntry(db.Model):
 
     def __repr__(self):
         return f"<Entry entry_id={self.entry_id}>"
+
+
+class ParkImage(db.Model):
+
+    __tablename__ = "park_image"
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    np_id = db.Column(db.Integer, db.ForeignKey("national_parks.np_id"))
+    park_code = db.Column(db.String, nullable=False)
+    image_url = db.Column(db.String)
+    image_caption = db.Column(db.String)
+
+    park = db.relationship("NationalParks", back_populates="images")
+
+    def __repr__(self):
+        return f"<Park Images np_id={self.np_id} img_url_1={self.image_url}>"
 
     ##############################################################################
     # Helper functions

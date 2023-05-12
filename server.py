@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, flash, session, redirect, jsonify
 from model import connect_to_db, db, FavoritePark, NationalParks
+from passlib.hash import argon2
 
 from jinja2 import StrictUndefined
 import os
@@ -35,7 +36,10 @@ def show_national_park(np_id):
 
     national_park = crud.get_np_by_id(np_id)
 
-    return render_template("national_park_details.html", national_park=national_park)
+    park_code = national_park.park_code
+    np_images = crud.get_np_images(park_code)
+    print(np_images)
+    return render_template("national_park_details.html", national_park=national_park, np_images=np_images)
 
 
 @app.route("/users")
