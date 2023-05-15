@@ -33,6 +33,16 @@ def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
 
+def get_all_user_emails():
+    """Return a list of all user emails"""
+    all_emails = []
+
+    for user in User.query.all():
+        user_email = user.email
+        all_emails.append(user_email)
+    return all_emails
+
+
 def create_national_parks(park_code, np_name, latitude, longitude, description, image_url):
     """Create a National Park."""
 
