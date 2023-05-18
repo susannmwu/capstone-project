@@ -1,45 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  {% extends 'base.html' %}
-  {% block title %}Trails Search{% endblock %}
+{% extends 'base.html' %}
 
-  <link rel="stylesheet" href="/static/css/styles.css">
+{% block title %}Trails Search{% endblock %}
 
-</head>
-<body>
-
-  {% block body %}
+{% block body %}
 
   <div id="trail-search-results">
-    <h2> Trail Search Results</h2>
+    <h1> Trail Search Results</h1>
+
 
       <p id="list-of-trails"> 
         {% for trail in hiking_trails %}
           <p>
             {{ trail["name"] }}
-           <p>
-            <ul>
-              {{ trail["description"] }}
-            </ul>
-            <ul>
+          <p>
+      
+          <p>
+            {{ trail["description"] }}
+          </p>
 
-            </ul>
-            <img id="trail-images"src="{{ trail["images"] }}" alt="">
+          <div id="fav-trails">
+            {% if session.get('user_email') %}
 
-
-            <section id="fav-trails">
-              {% if session.get('user_email') %}
-
-            <form action="/national-parks/trails/ {{ trail['name'] }}" method="POST">
-
+          <form action="/national-parks/trails/ {{ trail['name'] }}" method="POST">
             <input name="description" type="hidden" value="{{ trail['description'] }}">     
             <input name="parkcode" type="hidden" value="{{ parkCode }}"> 
             <input type="submit" value="Add trail to favorites">
+          </form>
+          {% endif %}
+        </div>
 
-            </form>
-            {% endif %}
-            </section>
+            <img id="trail-images"src="{{ trail["images"] }}" alt="">
 
         {% endfor %}
   </div>
@@ -47,5 +37,3 @@
   {% endblock %}
 
   <script src="/static/js/addFavorites.js"></script>
-</body>
-</html>

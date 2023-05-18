@@ -174,3 +174,15 @@ def get_np_images(parkcode):
         all_park_images.append(img.image_url)
 
     return all_park_images
+
+
+def get_np_image_captions(parkcode):
+    all_park_captions = []
+
+    image_caption = ParkImage.query.filter(
+        ParkImage.park_code == parkcode).all()
+
+    for cap in image_caption:
+        all_park_captions.append(cap.image_caption)
+
+    return all_park_captions

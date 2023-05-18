@@ -19,8 +19,8 @@ function addEntries(evt) {
 
     .then(response => response.json())
     .then((addEntries) => {
-        document.querySelector("#entries").insertAdjacentHTML("beforeend", `<ul><li class="add-bolding">${addEntries["np"]}<br></li><li>${addEntries["entry"]}</li></ul>`);
-
+        document.querySelector("#entries").insertAdjacentHTML("beforeend", `<ul><li class="add-bolding">${addEntries["np"]}<br></li> <li>${addEntries["entry"]}</li></ul>`);
+        document.getElementById("entry-field").value = " ";
     });
 }
 // i could insert a line break to resolve the reformatting of the entries

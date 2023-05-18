@@ -1,40 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-      {% extends 'base.html' %}
+  {% extends 'base.html' %}
 
-      {% block title %}View all National Parks{% endblock %}
-
-  <link rel="stylesheet" href="/static/css/styles.css">
-
-</head>
-<body>
+  {% block title %}View all National Parks{% endblock %}
 
   {% block body %}
 
   
-
+<div id="np-search">
   <h1>All National Parks</h1>
 
+  <p>Let's hit the hiking trails. Where should we head to next?</p>
+  <br>
 
   {% if session.get('user_email') %}
-  <ul>
-    <form action="search-park" method="POST">
-      <select id="search" name="search">
+    <ul>
+      <form action="search-park" method="POST">
+        <select id="search" class="form-select w-auto" name="search">
           
           {% for national_park in national_parks %}
-
+            <div id="id-select">
               <option>{{ national_park.np_name }}
-
+            </div>
           {% endfor %}
-        
-      </select>
-      
-    <input type="submit" value="Search">
+        </select>
+        <br>
+        <button type="submit" class="btn btn-light">Search</button>
       {% endif %}
-   </form>
+      </form>
   </ul>
+</div>
 
+<div id="all_national_parks">
   <div class="parent">
     {% for national_park in national_parks %}
 
@@ -48,13 +43,9 @@
         <img id="national-parks-images" 
         src="{{ national_park.image_url }}">
       </p>
-
     </div>
+
     {% endfor %}
-
-  </div>
-  
-  {% endblock %}
-
-</body>
-</html>
+    </div>
+</div>
+{% endblock %}

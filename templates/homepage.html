@@ -1,69 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-  <style>
-  img {
-    height: 500px;
-    width: 500px;
-  }
-  body {
-    background-image: url("/static/img/hurricane-ridge.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center center;
 
-}
-  </style>
 {% extends 'base.html' %}
-{% block title %}{% endblock %}
+
+{% block title %}Happy Trails{% endblock %}
+
+{% block body %}
 
 
-<head>
-    <title>Happy Trails</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
-</head>
+      <section id="showcase">
 
-<body>
-  {% block body %}
-    <h2>Welcome to Happy Trails! &#129406; </h2>
+          <div id="hp-carousel" class="carousel slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#hp-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#hp-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#hp-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              
+      
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="/static/img/hurricane-ridge.jpg" class="d-block w-100" alt="">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="/static/img/clouds-rest.jpg" class="d-block w-100" alt="">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="/static/img/mount-rainier.jpg" class="d-block w-100" alt="">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#hp-carousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#hp-carousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+      </section>
+      
+      <div class="container">
+        <section id="main">
+          <h1>Welcome to Happy Trails</h1>
+            <p>
+              Are you planning your next national park adventure and need help finding a trail? Look no further - Happy Trails can help you find your next hiking adventure at one of 
+              the many beautiful National Parks. With Happy Trails, users can save and remove parks from their favorites list,
+              save hiking trails, and record your favorite park memories. 
+            </p>
+        </section>
 
-    <h3>Register</h3>
-    <form action="/users" method="POST">
-      <p>
-        First name <input type="text" name="first_name">
-      </p>
-  
-      <p>
-        Last name <input type="text" name="last_name">
-      </p>
-  
-      <p>
-        Email <input type="text" name="email">
-      </p>
-  
-      <p>
-        Password <input type="password" name="password">
-      </p>
-  
-      <p>
-        <input type="submit">
-      </p>
-    </form>
+        <aside id="sidebar">
+          <form action="login" method="POST">
+            <h5>Log In</h5>
+            <div class="form-group w-auto">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group w-auto">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-light">Submit</button>
+          </form>
+        </div>
+    </aside>
 
-
-    <h3>Log In</h3>
-    <form action="/login" method="POST">
-      <p>
-        Email <input type="text" name="email">
-      </p>
-      <p>
-        Password <input type="password" name="password">
-      </p>
-      <p>
-        <input type="submit">
-      </p>
-    </form>
-
-</body>
 {% endblock %}
-</html>
+
+

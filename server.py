@@ -38,8 +38,10 @@ def show_national_park(np_id):
 
     park_code = national_park.park_code
     np_images = crud.get_np_images(park_code)
+    np_image_captions = crud.get_np_image_captions(park_code)
     # print(np_images)
-    return render_template("national_park_details.html", national_park=national_park, np_images=np_images)
+    return render_template("national_park_details.html", national_park=national_park,
+                           np_images=np_images, np_image_captions=np_image_captions)
 
 
 @app.route("/users")
@@ -63,6 +65,13 @@ def show_user_profile():
     else:
         flash("Please log in to view user profile")
         return ("/")
+
+
+@app.route("/register")
+def register_new_account():
+    """Display form for creating a new user account"""
+
+    return render_template("register.html")
 
 
 @app.route("/users", methods=["POST"])

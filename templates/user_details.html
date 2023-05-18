@@ -1,97 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% extends 'base.html' %}
-    {% block title %} {{ user.first_name }}'s Profile {% endblock %}
-    <link rel="stylesheet" href="/static/css/styles.css">
+{% extends 'base.html' %}
 
-</head>
-<body>
-    {% block body %}
+{% block title %} {{ user.first_name }}'s Profile {% endblock %}
 
-    <h1>Welcome back, {{ user.first_name }}</h1>
-    <h3>Favorite parks</h3>
+{% block body %}
 
-        <ul class="map">
-            <div id="map"></div>
-        </ul>
+<section id="user-dashboard">
 
-        <div id="favorite_parks_list">
-                {% for park in user.favorite_parks| sort(attribute="np_name") %}
-            <ul>
-                <li id="fav_park"> {{ park.np_name }} </li>
+    <h1 id="userdash-heading">Welcome back, {{ user.first_name }}</h1>
+
+        <div class="googlemaps-container">
+            <ul class="map">
+                <div id="map">
             </ul>
-
-                {% endfor %} 
         </div>
-            
 
+        <div class="dash-containers">
+            <h3>Favorite parks</h3>
+        
+                <article id="favorite_parks_list">
+                    {% for park in user.favorite_parks| sort(attribute="np_name") %}
+                        <ul>
+                            {{ park.np_name }}
+                        </ul>
+                        {% endfor %} 
+                </article>
+
+        <hr>
+      
                     {% if session.get('user_email') %}
                 <ul>
-                  <form action="/remove-fav-park" method="POST">
-                    <p>Select a park to remove from your favorites list</p>
-                    <select id="remove_park_field" name="remove_park">
-                        
-                        {% for park in user.favorite_parks %}
-
-                            <option>{{ park.np_name }}</option>
-
-                        {% endfor %}
-                    
-                    </select>
-
-                  <input type="submit" value="Remove">
-                    {% endif %}
-                 </form>
+                    <form action="/remove-fav-park" method="POST">
+                        <p>Select a park to remove from your favorites list</p>
+                            <select id="remove_park_field" class="form-select w-auto" name="remove_park" aria-label="Default select example">
+                                {% for park in user.favorite_parks %}
+                                <option>{{ park.np_name }}</option>
+                                {% endfor %}
+                              </select>
+                              <br>
+                              <button type="submit" class="btn btn-light">Remove</button>
+                        {% endif %}
+                    </form>
                 </ul>
+        </div>        
 
+        <br>
+
+        <div class="dash-containers">
         <h3>Park memories</h3>
 
-        <div id="entries">
-            {% for item in user.user_entries| sort(attribute="np")  %}
-            <ul>
-            <li id="np_name"> {{ item.np }}<br></li>
+            <article id="entries">
+                    {% for item in user.user_entries| sort(attribute="np")  %}
+                        <ul>
+                            <li id="np_name"> {{ item.np }}<br></li>
 
-            <li> {{ item.entry }} </li>
-            </ul>
-            {% endfor %} 
-
-        </div>
-
+                            <li> {{ item.entry }} </li>
+                        </ul>
+                    {% endfor %} 
+            </article>
+        <hr>
 
         {% if session.get('user_email') %}
         <ul>
-        <form id="journal-entry-form">
-            <p><label>Select a national park and record your park highlights</label></p>
-            <select id="np-field" name="np">
-                {% for park in user.favorite_parks %}
-                <option>{{ park.np_name }}</option>
-                {% endfor %}
-            </select>
-            <p>
-            <textarea id="entry-field" name="park_entry" rows="4" cols="50"></textarea>
-            <br>
-            <input type="submit" value="Save">
-            </p>
-        </form>   
-        {% endif %}
+            <form id="journal-entry-form">
+                    <p><label>Select a national park from your favorites list and record your park highlights.</label></p>
+                        <!-- <select id="np-field" name="np"> -->
+                            <!-- {% for park in user.favorite_parks %}
+                                <option>{{ park.np_name }}</option>
+                            {% endfor %} -->
+                        <!-- </select> -->
+                        <select id="np-field" class="form-select w-auto" name="np" aria-label="Default select example">
+
+                            {% for park in user.favorite_parks %}
+                            <option>{{ park.np_name}}</option>
+                            {% endfor %}
+                          </select>
+                    <!-- <p>
+                        <textarea id="entry-field" name="park_entry" rows="4" cols="50"></textarea>
+                    <br>
+                        <input type="submit" value="Save">
+                    </p> -->
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label"></label>
+                        <textarea class="form-control w-25" id="entry-field" name="park_entry" rows="3"></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-light">Save</button>
+                      </div>
+                    </div>
+            </form>   
+            {% endif %}
         </ul>
 
 
-    <h3>Favorite trails</h3>
 
-    <p id="fav-trails-list">
-        {% for park in user.favorite_trails %}
-        <ul>
-            {{ park.trail_name }} 
-        </ul>
+        <br>
 
-        <ul>
-            {{ park.trail_description }}
-        </ul>
-        {% endfor %} 
+    <div class="dash-containers">
+        <h3>Favorite trails</h3>
 
-    </p>
+        <p id="fav-trails-list">
+            {% for park in user.favorite_trails %}
+                <ul>
+                    {{ park.trail_name }} 
+                </ul>
+
+                <ul>
+                    {{ park.trail_description }}
+                </ul>
+            {% endfor %} 
+        </p>
+    </div>
+</section>
 
     <script src="/static/js/addFavorites.js"></script>
     <script src="/static/js/favNpMap.js"></script>
@@ -103,6 +121,3 @@
     </script>
 
     {% endblock %}
-</body>
-
-</html>
