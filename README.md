@@ -42,6 +42,8 @@ Users can save parks, hiking trails and park memories to their dashboard. Happy 
 
 Happy Trails has not yet been deployed, so here is how you can run the app locally on your machine.
 
+- Obtain an API Key from the National Park Service API and add to `secrets.sh`
+
 - Set up and activate a Python virtualenv and install all dependencies:
 
 - `pip install -r requirements.txt`
@@ -54,11 +56,11 @@ Happy Trails has not yet been deployed, so here is how you can run the app local
 
 - Create the tables in your database:
 
-- `python3 -i model.py`
+- `python3 model.py`
 
 - Seed database:
 
-- `python3 -i seed_database.py`
+- `python3 seed_database.py`
 
 - Start up the Flask server:
 
