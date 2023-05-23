@@ -46,25 +46,25 @@ Happy Trails has not yet been deployed, so here is how you can run the app local
 
 - Set up and activate a Python virtualenv and install all dependencies:
 
-- `pip install -r requirements.txt`
+  - `pip install -r requirements.txt`
 
 - Create a new database in psql named trails:
 
-- `psql`
+  - `psql`
 
-- `createdb trails;`
+  - `createdb trails;`
 
 - Create the tables in your database:
 
-- `python3 model.py`
+  - `python3 model.py`
 
 - Seed database:
 
-- `python3 seed_database.py`
+  - `python3 seed_database.py`
 
 - Start up the Flask server:
 
-- `python3 server.py`
+  - `python3 server.py`
 
 - Go to localhost:5000 on your web browser
 
